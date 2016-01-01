@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{97B4943B
 		Nuget\WinSysInfo.nuspec = Nuget\WinSysInfo.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.UnitTest", "WinSysInfo.UnitTest\WinSysInfo.UnitTest.csproj", "{6776CA11-02DD-48CF-AFD8-DF316501D970}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
