@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.Console", "WinSysInfo.Console\WinSysInfo.Console.csproj", "{9CBFAC3D-331A-43EE-98D7-035A1436621C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.Registry", "WinSysInfo.Registry\WinSysInfo.Registry.csproj", "{B4076304-52A4-41E1-98D9-F78233C5A841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.WMI", "WinSysInfo.WMI\WinSysInfo.WMI.csproj", "{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B261792A-625F-4283-9487-0A40C6A1C9EE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.markdown = README.markdown
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{97B4943B-EB31-4146-8253-8C9EC97A8B77}"
+	ProjectSection(SolutionItems) = preProject
+		Nuget\WinSysInfo.nuspec = Nuget\WinSysInfo.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CBFAC3D-331A-43EE-98D7-035A1436621C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBFAC3D-331A-43EE-98D7-035A1436621C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBFAC3D-331A-43EE-98D7-035A1436621C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBFAC3D-331A-43EE-98D7-035A1436621C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4076304-52A4-41E1-98D9-F78233C5A841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4076304-52A4-41E1-98D9-F78233C5A841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4076304-52A4-41E1-98D9-F78233C5A841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4076304-52A4-41E1-98D9-F78233C5A841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF0CD81B-95AF-4FFC-9285-AED0ECF53C98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

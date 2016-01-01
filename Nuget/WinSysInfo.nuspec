@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>WinSysInfo</id>
+    <version>0.0.1</version>
+    <authors>WinSysInfo</authors>
+    <owners>Subhadeep Niogi</owners>
+    <licenseUrl>https://github.com/AngleSharp/AngleSharp/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/subha007/SimpleSystemInfo</projectUrl>
+    <iconUrl></iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>WinSysInfo is a pilot project of documenting all Windows System information in one place. This is a test project used by the Author.</description>
+    <releaseNotes>For all changes see: </releaseNotes>
+    <copyright>Copyright 2015, WinSysInfo.</copyright>
+    <tags>Windows OS CSharp information info</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:group name="GenericHelpText">
+    <xs:sequence>
+      <xs:element name="Description" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="ShortDesc" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="LongName" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:group>
+  <xs:simpleType name="RegistryRootDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HKEY_CLASSES_ROOT" />
+      <xs:enumeration value="HKEY_CURRENT_USER" />
+      <xs:enumeration value="HKEY_LOCAL_MACHINE" />
+      <xs:enumeration value="HKEY_USERS" />
+      <xs:enumeration value="HKEY_PERFORMANCE_DATA" />
+      <xs:enumeration value="HKEY_CURRENT_CONFIG" />
+      <xs:enumeration value="HKEY_DYN_DATA" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NonEmptyStringDataType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ModelRegistry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Path"  minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Property">
+                <xs:complexType>
+                  <xs:group ref="GenericHelpText"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Value" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Property">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:group ref="GenericHelpText"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                </xs:complexType>
+                <xs:unique name="UniqueNameRegValue">
+                  <xs:selector xpath="."/>
+                  <xs:field xpath="@name"/>
+                </xs:unique>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="root" type="xs:string" use="required" />
+            <xs:attribute name="path" type="xs:string" use="required" />
+            <xs:attribute name="customCode" type="xs:boolean" />
+          </xs:complexType>
+          <xs:unique name="UniqueNameRegKey">
+            <xs:selector xpath="Value"/>
+            <xs:field xpath="@name"/>
+          </xs:unique>
+        </xs:element> 
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

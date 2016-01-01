@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ModelRegistry>
+  <Path name="IISVersion" root="HKEY_LOCAL_MACHINE" path="SOFTWARE\Microsoft\InetStp">
+    <Property>
+      <Description>Registry Path to find the IIS Version</Description>
+      <ShortDesc>Information on IIS Version</ShortDesc>
+      <LongName>IISVersion</LongName>
+    </Property>
+    <Value name="IISProgramGroup">
+      <Property>
+        <Description>A IIS program group is a window within program manager that contains icons representing applications that can be accessed on the computer.</Description>
+      </Property>
+    </Value>
+    <Value name="InstallPath">
+      <Property>
+        <Description>The path of IIS installation folder.</Description>
+      </Property>
+    </Value>
+    <Value name="MajorVersion">
+      <Property>
+        <Description>Major Version portion of the IIS</Description>
+      </Property>
+    </Value>
+    <Value name="MinorVersion">
+      <Property>
+        <Description>Minor Version portion of the IIS</Description>
+      </Property>
+    </Value>
+    <Value name="MetabaseSetMajorVersion">
+      <Property>
+        <Description>The metabase is a repository for most Internet Information Services (IIS) configuration values. Major Version portion of the IIS Metabase.</Description>
+      </Property>
+    </Value>
+    <Value name="MetabaseSetMinorVersion">
+      <Property>
+        <Description>The metabase is a repository for most Internet Information Services (IIS) configuration values. Minor Version portion of the IIS Metabase.</Description>
+      </Property>
+    </Value>
+    <Value name="PathWWWRoot">
+      <Property>
+        <Description>Path to the WWW Root folder.</Description>
+      </Property>
+    </Value>
+    <Value name="ProductString">
+      <Property>
+        <Description>Actual installed product name string.</Description>
+      </Property>
+    </Value>
+    <Value name="SetupString">
+      <Property>
+        <Description>Setup value of the IIS configuration.</Description>
+      </Property>
+    </Value>
+    <Value name="VersionString">
+      <Property>
+        <Description>IIS Version string for display.</Description>
+      </Property>
+    </Value>
+  </Path>
+  <Path name="ODBCDrivers" root="HKEY_LOCAL_MACHINE" path="SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers" customCode="true">
+    <Property>
+      <Description>Registry Path to find the list of ODBC Drivers.</Description>
+      <ShortDesc>Registry Path to find the list of ODBC Drivers.</ShortDesc>
+      <LongName>ODBC Drivers</LongName>
+    </Property>
+    <Value name="(Default)">
+      <Property>
+        <Description></Description>
+      </Property>
+    </Value>
+  </Path>
+  <Path name="ODBCDriversINI" root="HKEY_LOCAL_MACHINE" path="SOFTWARE\ODBC\ODBCINST.INI">
+    <Property>
+      <Description>Registry Path to find the list of ODBC Drivers.</Description>
+      <ShortDesc>Registry Path to find the list of ODBC Drivers.</ShortDesc>
+      <LongName>ODBC Drivers</LongName>
+    </Property>
+    <Value name="(Default)">
+      <Property>
+        <Description></Description>
+      </Property>
+    </Value>
+  </Path>
+</ModelRegistry>

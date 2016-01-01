@@ -1,0 +1,19 @@
+; indicate this is the root of the project
+root = true
+
+[*]
+indent_style = space
+end_of_line = LF
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+indent_size = 4
+
+# Use 2 spaces for indentation in HTML, JavaScript, Ruby, SCSS, and XML
+
+[*.{html,js,rb,scss,xml}]
+indent_size = 2
+
+[*.csproj]
+indent_style = space
+indent_size = 2
