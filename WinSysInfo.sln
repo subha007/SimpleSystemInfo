@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.Console", "WinSysInfo.Console\WinSysInfo.Console.csproj", "{9CBFAC3D-331A-43EE-98D7-035A1436621C}"
 EndProject
@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{97B4943B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.UnitTest", "WinSysInfo.UnitTest\WinSysInfo.UnitTest.csproj", "{6776CA11-02DD-48CF-AFD8-DF316501D970}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinSysInfo.PEView", "WinSysInfo.PEView\WinSysInfo.PEView.csproj", "{B15E34EB-C91E-474B-BF8E-EA770D0A75EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6776CA11-02DD-48CF-AFD8-DF316501D970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15E34EB-C91E-474B-BF8E-EA770D0A75EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15E34EB-C91E-474B-BF8E-EA770D0A75EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15E34EB-C91E-474B-BF8E-EA770D0A75EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15E34EB-C91E-474B-BF8E-EA770D0A75EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
