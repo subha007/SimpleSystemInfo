@@ -8,6 +8,8 @@ namespace WinSysInfo.PEView.Model
 {
     public enum EnumCOFFHeaderMachineTypes
     {
+        MT_Invalid = 0XFFFF,
+
         /// <summary>
         /// The contents of this field are assumed to be applicable to 
         /// any machine type

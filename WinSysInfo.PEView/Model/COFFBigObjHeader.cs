@@ -12,6 +12,9 @@ namespace WinSysInfo.PEView.Model
     /// </summary>
     public class COFFBigObjHeader
     {
+        /// <summary>
+        /// The minimum version number value
+        /// </summary>
         public const ushort MinBigObjectVersion = 2;
 
         /// <summary>
@@ -32,10 +35,10 @@ namespace WinSysInfo.PEView.Model
             get { return uuid; }
             set { uuid = value; }
         }
-        public uint unused1 { get; set; }
-        public uint unused2 { get; set; }
-        public uint unused3 { get; set; }
-        public uint unused4 { get; set; }
+        public uint Unused1 { get; set; }
+        public uint Unused2 { get; set; }
+        public uint Unused3 { get; set; }
+        public uint Unused4 { get; set; }
         public uint NumberOfSections { get; set; }
         public uint PointerToSymbolTable { get; set; }
         public uint NumberOfSymbols { get; set; }

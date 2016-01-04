@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using SysInfoException;
 using SysInfoInventryWinReg.Attribute;
 using SysInfoInventryWinReg.Generic;
 using System;
@@ -12,6 +11,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using WinSysInfo.WSIException;
 
 namespace SysInfoInventryWinReg.Model
 {

@@ -14,7 +14,7 @@ namespace WinSysInfo.PEView.Model
     /// loading and running an executable file. They are unchanged 
     /// for the PE32+ format
     /// </summary>
-    public class StandardFields
+    public class OptionalHeaderStandardFields
     {
         /// <summary>
         /// The unsigned integer that identifies the state of the image file.

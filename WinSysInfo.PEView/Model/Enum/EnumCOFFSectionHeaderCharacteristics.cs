@@ -11,7 +11,7 @@ namespace WinSysInfo.PEView.Model
     /// header indicate characteristics of the section
     /// </summary>
     [Flags]
-    public enum EnumCOFFSectionHeaderCharacteristics
+    public enum EnumCOFFSectionHeaderCharacteristics : uint
     {
         SC_Invalid = 0XFFFFFFFF,
 

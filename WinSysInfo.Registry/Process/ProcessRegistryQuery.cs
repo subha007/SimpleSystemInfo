@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinSysInfo.WSIException;
 
 namespace SysInfoInventryWinReg.Process
 {
@@ -160,7 +161,7 @@ namespace SysInfoInventryWinReg.Process
             if (objValue == null)
             {
                 logger.Warn(keyValue.Name + " not found in registry");
-                keyValue.AddLog(SysInfoException.ExceptionLevel.WARN, keyValue.Name + " not found in registry");
+                keyValue.AddLog(ExceptionLevel.WARN, keyValue.Name + " not found in registry");
             }
             else
                 keyValue.ParseAndSetValue(objValue, rootRegKey.GetValueKind(keyValue.Name));

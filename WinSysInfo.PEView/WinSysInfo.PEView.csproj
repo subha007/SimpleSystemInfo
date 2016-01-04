@@ -41,13 +41,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\DateTimeConverter.cs" />
+    <Compile Include="Model\AttributeCertificateTableImageOnlyFormat.cs" />
+    <Compile Include="Model\AuxiliarybfAndefSymbolLayout.cs" />
+    <Compile Include="Model\AuxiliaryCLRTokenLayout.cs" />
+    <Compile Include="Model\AuxiliaryFileLayout.cs" />
+    <Compile Include="Model\AuxiliaryFunctionDefinitionLayout.cs" />
+    <Compile Include="Model\AuxiliarySectionDefinitionsLayout.cs" />
+    <Compile Include="Model\AuxiliaryWeakExternalLayout.cs" />
     <Compile Include="Model\COFFBigObjHeader.cs" />
     <Compile Include="Model\COFFFileHeader.cs" />
     <Compile Include="Model\COFFOptionalHeader.cs" />
+    <Compile Include="Model\COFFRelocationsObjectOnly.cs" />
+    <Compile Include="Model\COFFSectionTableLayout.cs" />
+    <Compile Include="Model\COFFSymbolTableLayout.cs" />
     <Compile Include="Model\ConstantWinCOFFImage.cs" />
     <Compile Include="Model\Enum\EnumAuxSymbolType.cs" />
     <Compile Include="Model\Enum\EnumBaseRelocationType.cs" />
     <Compile Include="Model\Enum\EnumCodeViewIdentifiers.cs" />
+    <Compile Include="Model\Enum\EnumCOFFSizes.cs" />
     <Compile Include="Model\Enum\EnumCOMDATType.cs" />
     <Compile Include="Model\Enum\EnumDebugType.cs" />
     <Compile Include="Model\Enum\EnumImportNameType.cs" />
@@ -61,14 +72,17 @@
     <Compile Include="Model\Enum\EnumCOFFHeaderCharacteristics.cs" />
     <Compile Include="Model\Enum\EnumCOFFHeaderMachineTypes.cs" />
     <Compile Include="Model\Enum\EnumCOFFSectionHeaderCharacteristics.cs" />
-    <Compile Include="Model\Enum\EnumCOFFSizes.cs" />
     <Compile Include="Model\Enum\EnumDataDirectoryEntryType.cs" />
     <Compile Include="Model\Enum\EnumOptionalHeaderMagicNo.cs" />
     <Compile Include="Model\Enum\EnumPEType.cs" />
     <Compile Include="Model\Enum\EnumSymbolSectionNumber.cs" />
+    <Compile Include="Model\Enum\EnumSymbolTypeMicrosoftTool.cs" />
     <Compile Include="Model\Enum\EnumWeakExternalCharacteristics.cs" />
     <Compile Include="Model\Enum\EnumWindowsSubsytem.cs" />
     <Compile Include="Model\Enum\EnumCOFFDllCharacteristics.cs" />
+    <Compile Include="Model\ImportDirectoryTableEntry.cs" />
+    <Compile Include="Model\ImportHeaderLayout.cs" />
+    <Compile Include="Model\ImportLookupTableEntry32.cs" />
     <Compile Include="Model\MSDOSHeaderLayout.cs" />
     <Compile Include="Model\NTHeaderLayout.cs" />
     <Compile Include="Model\OptionalHeaderDataDirImageOnly.cs" />
@@ -79,8 +93,8 @@
     <Compile Include="Model\OptionalHeaderWindowsSpecificFieldsCommon1.cs" />
     <Compile Include="Model\OptionalHeaderWindowsSpecificFieldsCommon2.cs" />
     <Compile Include="Model\PEFileLayout.cs" />
-    <Compile Include="PEBase.cs" />
-    <Compile Include="PEProperties.cs" />
+    <Compile Include="Process\PEBrowserBase.cs" />
+    <Compile Include="Process\PEProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

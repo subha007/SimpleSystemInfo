@@ -33,6 +33,6 @@ namespace WinSysInfo.PEView.Model
         /// does not correspond to a section. Microsoft tools use this setting 
         /// along with .file records (storage class FILE).
         /// </summary>
-        IMAGE_SYM_DEBUG = -2
+        IMAGE_SYM_DEBUG = -2,
     }
 }

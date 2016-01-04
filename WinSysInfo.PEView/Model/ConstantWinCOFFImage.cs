@@ -21,9 +21,9 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// The PE signature bytes that follows the DOS stub header.
         /// </summary>
-        public static const char[] PEMagic = { 'P', 'E', '\0', '\0' };
+        public static readonly char[] PEMagic = { 'P', 'E', '\0', '\0' };
 
-        public static const char[] BigObjMagic = {
+        public static readonly char[] BigObjMagic = {
           '\xc7', '\xa1', '\xba', '\xd1', '\xee', '\xba', '\xa9', '\x4b',
           '\xaf', '\x20', '\xfa', '\xf6', '\x6a', '\xa4', '\xdc', '\xb8',
         };

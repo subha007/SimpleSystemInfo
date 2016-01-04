@@ -101,6 +101,12 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinSysInfo.WSIException\WinSysInfo.WSIException.csproj">
+      <Project>{89591bb4-8984-44a3-afb3-94a1e7a19f46}</Project>
+      <Name>WinSysInfo.WSIException</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

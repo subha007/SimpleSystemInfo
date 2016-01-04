@@ -105,12 +105,12 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// Reserved words
         /// </summary>
-        private fixed ushort reserved[4];
-
-        /// <summary>
-        /// Reserved words
-        /// </summary>
-        public ushort[] Reserved { get; set; }
+        private ushort[] reserved = new ushort[4];
+        public ushort[] Reserved
+        {
+            get { return this.reserved; }
+            set { this.reserved = value; }
+        }
 
         /// <summary>
         /// OEM identifier for <paramref name="OEMinfo"/>
@@ -125,12 +125,12 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// Reserved words
         /// </summary>
-        private fixed ushort reserved2[10];
-
-        /// <summary>
-        /// Reserved words
-        /// </summary>
-        public ushort[] Reserved2 { get; set; }
+        private ushort[] reserved2 = new ushort[10];
+        public ushort[] Reserved2
+        {
+            get { return reserved2; }
+            set { this.reserved2 = value; }
+        }
 
         /// <summary>
         /// File address of new exe header

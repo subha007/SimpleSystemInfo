@@ -16,12 +16,11 @@ namespace WinSysInfo.PEView.Model
         /// This signature is “PE\0\0” (the letters “P” and “E” followed by two 
         /// null bytes).
         /// </summary>
-        private fixed char signature[4];
-
-        /// <summary>
-        /// This signature is “PE\0\0” (the letters “P” and “E” followed by two 
-        /// null bytes).
-        /// </summary>
-        public char[] Signature { get; set; }
+        private char[] signature = new char[4];
+        public char[] Signature
+        {
+            get { return signature; }
+            set { signature = value; }
+        }
     }
 }
