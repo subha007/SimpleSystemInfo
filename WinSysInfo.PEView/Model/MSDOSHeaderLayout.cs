@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,123 +19,106 @@ namespace WinSysInfo.PEView.Model
     /// location 0x3c during linking.
     /// </summary>
     /// <remarks>The DOS compatible header at the front of all PEs.</remarks>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class MSDOSHeaderLayout
     {
         /// <summary>
         /// Generally ID='MZ'
         /// </summary>
-        private char[] magic = new char[2];
-
-        /// <summary>
-        /// Generally ID='MZ'
-        /// A constant numerical or text value used to identify a file format
-        /// <see cref="https://en.wikipedia.org/wiki/List_of_file_signatures"/>
-        /// </summary>
-        public char[] Magic 
-        {
-            get { return magic; }
-            set { magic = value; }
-        }
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+        public char[] Magic;
 
         /// <summary>
         /// Number of bytes in last 512-byte page of executable
         /// </summary>
-        public ushort UsedBytesInTheLastPage { get; set; }
+        public ushort UsedBytesInTheLastPage;
 
         /// <summary>
         /// Total number of 512-byte pages in executable (including the last page)
         /// </summary>
-        public ushort FileSizeInPages { get; set; }
+        public ushort FileSizeInPages;
 
         /// <summary>
         /// Number of relocation entries
         /// </summary>
-        public ushort NumberOfRelocationItems { get; set; }
+        public ushort NumberOfRelocationItems;
 
         /// <summary>
         /// Header size in paragraphs
         /// </summary>
-        public ushort HeaderSizeInParagraphs { get; set; }
+        public ushort HeaderSizeInParagraphs;
 
         /// <summary>
         /// Minimum paragraphs of memory allocated in addition to the code size
         /// </summary>
-        public ushort MinimumExtraParagraphs { get; set; }
+        public ushort MinimumExtraParagraphs;
 
         /// <summary>
         /// Maximum number of paragraphs allocated in addition to the code size
         /// </summary>
-        public ushort MaximumExtraParagraphs { get; set; }
+        public ushort MaximumExtraParagraphs;
 
         /// <summary>
         /// Initial SS relative to start of executable
         /// </summary>
-        public ushort InitialRelativeSS { get; set; }
+        public ushort InitialRelativeSS;
 
         /// <summary>
         /// Initial SP
         /// </summary>
-        public ushort InitialSP { get; set; }
+        public ushort InitialSP;
 
         /// <summary>
         /// Checksum (or 0) of executable
         /// </summary>
-        public ushort Checksum { get; set; }
+        public ushort Checksum;
 
         /// <summary>
         /// CS:IP relative to start of executable (entry point)
         /// </summary>
-        public ushort InitialIP { get; set; }
+        public ushort InitialIP;
 
         /// <summary>
         /// Initial relative CS value
         /// </summary>
-        public ushort InitialRelativeCS { get; set; }
+        public ushort InitialRelativeCS;
 
         /// <summary>
         /// Offset of relocation table; 40h for new-(NE,LE,LX,W3,PE etc.) 
         /// executable
         /// </summary>
-        public ushort AddressOfRelocationTable { get; set; }
+        public ushort AddressOfRelocationTable;
 
         /// <summary>
         /// Overlay number (0h = main program)
         /// </summary>
-        public ushort OverlayNumber { get; set; }
+        public ushort OverlayNumber;
 
         /// <summary>
         /// Reserved words
         /// </summary>
-        private ushort[] reserved = new ushort[4];
-        public ushort[] Reserved
-        {
-            get { return this.reserved; }
-            set { this.reserved = value; }
-        }
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        private ushort[] Reserved;
 
         /// <summary>
         /// OEM identifier for <paramref name="OEMinfo"/>
         /// </summary>
-        public ushort OEMid { get; set; }
+        public ushort OEMid;
 
         /// <summary>
         /// OEM information
         /// </summary>
-        public ushort OEMinfo { get; set; }
+        public ushort OEMinfo;
 
         /// <summary>
         /// Reserved words
         /// </summary>
-        private ushort[] reserved2 = new ushort[10];
-        public ushort[] Reserved2
-        {
-            get { return reserved2; }
-            set { this.reserved2 = value; }
-        }
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        private ushort[] Reserved2;
 
         /// <summary>
         /// File address of new exe header
         /// </summary>
-        public uint AddressOfNewExeHeader { get; set; }
+        public uint AddressOfNewExeHeader;
     }
 }

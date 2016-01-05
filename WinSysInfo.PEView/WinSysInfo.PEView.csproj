@@ -63,6 +63,7 @@
     <Compile Include="Model\Enum\EnumDebugType.cs" />
     <Compile Include="Model\Enum\EnumImportNameType.cs" />
     <Compile Include="Model\Enum\EnumImportType.cs" />
+    <Compile Include="Model\Enum\EnumReaderLayoutType.cs" />
     <Compile Include="Model\Enum\EnumRelocationTypeAMD64.cs" />
     <Compile Include="Model\Enum\EnumRelocationTypeI386.cs" />
     <Compile Include="Model\Enum\EnumRelocationTypesARM.cs" />
@@ -92,8 +93,13 @@
     <Compile Include="Model\OptionalHeaderWindowsSpecificFields32Plus.cs" />
     <Compile Include="Model\OptionalHeaderWindowsSpecificFieldsCommon1.cs" />
     <Compile Include="Model\OptionalHeaderWindowsSpecificFieldsCommon2.cs" />
-    <Compile Include="Model\PEFileLayout.cs" />
-    <Compile Include="Process\PEBrowserBase.cs" />
+    <Compile Include="Process\COFFHeaderReaderHandler.cs" />
+    <Compile Include="Process\COFFReaderHandler.cs" />
+    <Compile Include="Process\COFFReaderProperty.cs" />
+    <Compile Include="Process\ICORCOFFReaderHandler.cs" />
+    <Compile Include="Process\MSDOSHeaderReaderHandler.cs" />
+    <Compile Include="Process\ObjectFileReader.cs" />
+    <Compile Include="Process\COFFBrowserBase.cs" />
     <Compile Include="Process\PEProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
