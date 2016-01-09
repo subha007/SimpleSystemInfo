@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Process
@@ -10,7 +11,7 @@ namespace WinSysInfo.PEView.Process
     /// <summary>
     /// Defines an interface for handling the requests
     /// </summary>
-    public class COFFHeaderReaderHandler : COFFReaderHandler
+    public class COFFHeaderReaderHandler : ILayoutRead<TLayoutType> where TLayoutType : struct
     {
         /// <summary>
         /// The actual data

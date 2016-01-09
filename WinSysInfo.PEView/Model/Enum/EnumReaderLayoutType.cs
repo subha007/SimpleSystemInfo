@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace WinSysInfo.PEView.Model
 {
+    /// <summary>
+    /// The flags representing individual structures
+    /// The enums are to be in sequential order of file read
+    /// </summary>
+    [Flags]
     public enum EnumReaderLayoutType : ulong
     {
         NONE = 0x00000000,

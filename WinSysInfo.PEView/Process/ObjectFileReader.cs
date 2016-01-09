@@ -11,7 +11,7 @@ namespace WinSysInfo.PEView.Process
     /// <summary>
     /// An internal class to read binary, object files
     /// </summary>
-    internal class ObjectFileReader : IDisposable
+    public class ObjectFileReader : IDisposable
     {
         /// <summary>
         /// In .NET 4 + this is the best method

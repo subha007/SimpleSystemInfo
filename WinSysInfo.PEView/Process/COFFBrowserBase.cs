@@ -57,6 +57,7 @@ namespace WinSysInfo.PEView.Process
                 if (this.ReaderProperty.LayoutFlag.HasFlag(layoutType) == true)
                 {
                     COFFReaderHandler handler = this.FactoryHandler(layoutType);
+                    handler.Read();
                 }
                 else
                 {
