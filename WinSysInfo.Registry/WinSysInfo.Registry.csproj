@@ -35,10 +35,11 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>WinSysInfoSNKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EditorConfig.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=fe6ce3ea283749f2, processorArchitecture=MSIL">
@@ -93,7 +94,6 @@
     </None>
     <None Include="Batch\XsdToClass.bat" />
     <None Include="packages.config" />
-    <None Include="WinSysInfoSNKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Config\RegsitryKeyConfig.xml">

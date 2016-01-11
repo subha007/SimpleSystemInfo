@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WinSysInfo.PEView.Interface;
 
 namespace WinSysInfo.PEView.Model
 {
@@ -20,7 +21,7 @@ namespace WinSysInfo.PEView.Model
     /// </summary>
     /// <remarks>The DOS compatible header at the front of all PEs.</remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class MSDOSHeaderLayout
+    public struct MSDOSHeaderLayout
     {
         /// <summary>
         /// Generally ID='MZ'

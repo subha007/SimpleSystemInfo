@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Process
@@ -20,14 +19,9 @@ namespace WinSysInfo.PEView.Process
         private ObjectFileReader Reader { get; set; }
 
         /// <summary>
-        /// Type of Reader
-        /// </summary>
-        public COFFReaderProperty ReaderProperty { get; set; }
-
-        /// <summary>
         /// Data mapping
         /// </summary>
-        public Dictionary<EnumReaderLayoutType, COFFReaderHandler> FileData { get; set; }
+        public Dictionary<EnumReaderLayoutType, object> FileData { get; set; }
 
         /// <summary>
         /// Construct the base PE browser
@@ -36,8 +30,7 @@ namespace WinSysInfo.PEView.Process
         public COFFBrowserBase(string fullPEFilePath)
         {
             this.Reader = new ObjectFileReader(fullPEFilePath);
-            this.ReaderProperty = new COFFReaderProperty();
-            this.FileData = new Dictionary<EnumReaderLayoutType, COFFReaderHandler>();
+            this.FileData = new Dictionary<EnumReaderLayoutType, object>();
         }
 
         /// <summary>
@@ -45,45 +38,31 @@ namespace WinSysInfo.PEView.Process
         /// </summary>
         public void Read()
         {
-            // Read the DOS Header (always same)
-            uint bitwiseFlag = Convert.ToUInt32(this.ReaderProperty.LayoutFlag);
-            uint enumValue = 0;
+            // Check if this is PE / COFF
+            this.Reader.CreateSequentialAccess(0, LayoutModel<MSDOSHeaderLayout>.DataSize +
+                                            LayoutModel<NTHeaderLayout>.DataSize);
 
-            // Iterate through the enum flags
-            for (int count = 0; count < sizeof(EnumReaderLayoutType) - 1; ++count)
+            // Check if this is a PE/COFF file.
+            byte[] sigBytes = this.Reader.ReadBytes(0, 2);
+            char[] sigchars = System.Text.Encoding.UTF8.GetString(sigBytes).ToCharArray();
+
+            if(sigchars.SequenceEqual(ConstantWinCOFFImage.MSDOSMagic) == true)
             {
-                EnumReaderLayoutType layoutType = (EnumReaderLayoutType)(enumValue);
+                // PE/COFF, seek through MS-DOS compatibility stub and 4-byte
+                // PE signature to find 'normal' COFF header.
+                this.FileData.Add(EnumReaderLayoutType.MSDOS_HEADER,
+                    (LayoutModel<MSDOSHeaderLayout>) this.Reader.ReadLayout<MSDOSHeaderLayout>(0));
 
-                if (this.ReaderProperty.LayoutFlag.HasFlag(layoutType) == true)
-                {
-                    COFFReaderHandler handler = this.FactoryHandler(layoutType);
-                    handler.Read();
-                }
-                else
-                {
-                    enumValue <<= 1;
-                }
+                // Check the PE magic bytes. ("PE\0\0")
+                this.FileData.Add(EnumReaderLayoutType.NT_HEADER,
+                    (LayoutModel<NTHeaderLayout>) this.Reader.ReadLayout<NTHeaderLayout>(0));
+
+                NTHeaderLayout model = (NTHeaderLayout)(this.FileData[EnumReaderLayoutType.NT_HEADER]);
+                if(model.Signature.SequenceEqual(ConstantWinCOFFImage.PEMagic) == false)
+                    return;
             }
-        }
 
-        /// <summary>
-        /// Get the factory method
-        /// </summary>
-        /// <param name="layoutType"></param>
-        /// <returns></returns>
-        private COFFReaderHandler FactoryHandler(EnumReaderLayoutType layoutType)
-        {
-            switch(layoutType)
-            {
-                case EnumReaderLayoutType.MSDOS_HEADER:
-                    return new MSDOSHeaderReaderHandler(EnumReaderLayoutType.MSDOS_HEADER);
-
-                case EnumReaderLayoutType.COFF_FILE_HEADER:
-                    return new COFFHeaderReaderHandler(EnumReaderLayoutType.COFF_FILE_HEADER);
-
-            }
-                
-            return null;
+            // Read COFF header
         }
     }
 }

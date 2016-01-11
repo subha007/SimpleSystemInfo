@@ -41,9 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\DateTimeConverter.cs" />
-    <Compile Include="Interface\ILayoutRead.cs" />
-    <Compile Include="Interface\ILayoutHandler.cs" />
-    <Compile Include="Interface\ILayoutModel.cs" />
+    <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\LayoutModel.cs" />
     <Compile Include="Model\Struct\AttributeCertificateTableImageOnlyFormat.cs" />
     <Compile Include="Model\Struct\AuxiliarybfAndefSymbolLayout.cs" />
@@ -97,14 +95,12 @@
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFields32Plus.cs" />
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon1.cs" />
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon2.cs" />
-    <Compile Include="Process\COFFHeaderReaderHandler.cs" />
-    <Compile Include="Process\COFFHandler.cs" />
+    <Compile Include="Process\BitConverterExtended.cs" />
     <Compile Include="Process\COFFReaderProperty.cs" />
-    <Compile Include="Process\ICORCOFFReaderHandler.cs" />
-    <Compile Include="Process\MSDOSHeaderReaderHandler.cs" />
+    <Compile Include="Process\MemoryRandomAccess.cs" />
+    <Compile Include="Process\MemorySequentialAccess.cs" />
     <Compile Include="Process\ObjectFileReader.cs" />
     <Compile Include="Process\COFFBrowserBase.cs" />
-    <Compile Include="Process\PEProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@ namespace WinSysInfo.PEView.Model
     /// number of sections to 96.
     /// <see cref="http://osxr.org:8080/android/source/external/llvm/include/llvm/Support/COFF.h"/>
     /// </summary>
-    public class COFFFileHeader
+    public struct COFFFileHeader
     {
         /// <summary>
         /// The number that identifies the type of target machine
