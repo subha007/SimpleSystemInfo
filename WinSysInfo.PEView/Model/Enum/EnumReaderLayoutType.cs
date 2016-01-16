@@ -15,9 +15,9 @@ namespace WinSysInfo.PEView.Model
     {
         NONE = 0x00000000,
         MSDOS_HEADER = 0x00000001,
-        NT_HEADER = 0x00000002,
-        COFF_FILE_HEADER = 0x00000002,
-
+        MSDOS_STUB = MSDOS_HEADER + 1,
+        NT_HEADER = MSDOS_HEADER + 1,
+        COFF_FILE_HEADER = NT_HEADER + 1,
         FULL_READ = 0xFFFFFFFF,
     }
 }

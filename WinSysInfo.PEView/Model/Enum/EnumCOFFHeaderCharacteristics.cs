@@ -11,7 +11,7 @@ namespace WinSysInfo.PEView.Model
     /// of the object or image file. The following flags are currently defined.
     /// </summary>
     [Flags]
-    public enum EnumCOFFHeaderCharacteristics
+    public enum EnumCOFFHeaderCharacteristics : ushort
     {
         /// <summary>
         /// Image only, Windows CE, and Windows NT® and later. 

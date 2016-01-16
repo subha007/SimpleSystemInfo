@@ -32,7 +32,7 @@ namespace WinSysInfo.PEView.Process
         public ObjectFileReader(string fullPhysicalPath)
         {
             FileInfo fInfo = new FileInfo(fullPhysicalPath);
-            if(fInfo.Exists == false)
+            if (fInfo.Exists == false)
             {
                 throw new FileNotFoundException(string.Format("{0} not found.", fullPhysicalPath));
             }
@@ -48,8 +48,7 @@ namespace WinSysInfo.PEView.Process
         public void CreateRandomAccess(long offset, long size)
         {
             // If previous accessor is still open close and clean it
-            if(this.ReaderStrategy != null)
-                this.ReaderStrategy.Close();
+            this.CloseReader();
 
             if(this.MemoryFile != null)
                 this.ReaderStrategy = new MemoryRandomAccess(this.MemoryFile, offset, size);
@@ -63,12 +62,52 @@ namespace WinSysInfo.PEView.Process
         public void CreateSequentialAccess(long offset, long size)
         {
             // If previous accessor is still open close and clean it
-            if(this.ReaderStrategy != null)
-                this.ReaderStrategy.Close();
+            this.CloseReader();
 
             if(this.MemoryFile != null)
                 this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile, offset, size);
         }
+
+        /// <summary>
+        /// Creates random access to whole file
+        /// </summary>
+        public void CreateSequentialAccess()
+        {
+            // If previous accessor is still open close and clean it
+            this.CloseReader();
+
+            if (this.MemoryFile != null)
+                this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile);
+        }
+
+        /// <summary>
+        /// Close the Reader
+        /// </summary>
+        protected void CloseReader()
+        {
+            // If previous accessor is still open close and clean it
+            if (this.ReaderStrategy != null)
+            {
+                this.ReaderStrategy.Close();
+                this.ReaderStrategy = null;
+            }
+        }
+
+        #region Peek
+
+        /// <summary>
+        /// Peek ahead bytes but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="count">The number of bytes to read. Default is 1.</param>
+        /// <returns>A byte array</returns>
+        public byte[] PeekBytes(int count = 1, long position = 0)
+        {
+            return this.ReaderStrategy.PeekBytes(count, position);
+        }
+
+        #endregion
 
         #region Reader
 
@@ -76,10 +115,11 @@ namespace WinSysInfo.PEView.Process
         /// Read a layout model
         /// </summary>
         /// <typeparam name="T">Layout Model Type</typeparam>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0.</param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public LayoutModel<TLayoutType> ReadLayout<TLayoutType>(int position)
+        public LayoutModel<TLayoutType> ReadLayout<TLayoutType>(long position = 0)
             where TLayoutType : struct
         {
             return this.ReaderStrategy.ReadLayout<TLayoutType>(position);
@@ -89,21 +129,24 @@ namespace WinSysInfo.PEView.Process
         /// Read a layout model
         /// </summary>
         /// <typeparam name="T">Layout Model Type</typeparam>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public void ReadLayout<TLayoutType>(int position, LayoutModel<TLayoutType> model)
+        public void ReadLayout<TLayoutType>(LayoutModel<TLayoutType> model, long position = 0)
             where TLayoutType : struct
         {
-            this.ReaderStrategy.ReadLayout<TLayoutType>(position, model);
+            this.ReaderStrategy.ReadLayout<TLayoutType>(model, position);
         }
 
         /// <summary>
         /// Read bytes
         /// </summary>
-        /// <param name="count"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="count">The number of bytes to read. Default is 1.</param>
         /// <returns></returns>
-        public byte[] ReadBytes(int position, int count)
+        public byte[] ReadBytes(int count = 1, int position = 0)
         {
             return this.ReaderStrategy.ReadBytes(position, count);
         }
@@ -111,9 +154,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Read boolean data
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public bool? ReadBoolean(long position)
+        public bool? ReadBoolean(long position = 0)
         {
             return this.ReaderStrategy.ReadBoolean(position);
         }
@@ -121,9 +165,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a byte value from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public byte? ReadByte(long position)
+        public byte? ReadByte(long position = 0)
         {
             return this.ReaderStrategy.ReadByte(position);
         }
@@ -131,9 +176,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a character from the accessor.
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public char? ReadChar(long position)
+        public char? ReadChar(long position = 0)
         {
             return this.ReaderStrategy.ReadChar(position);
         }
@@ -141,9 +187,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a decimal value from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public decimal? ReadDecimal(long position)
+        public decimal? ReadDecimal(long position = 0)
         {
             return this.ReaderStrategy.ReadDecimal(position);
         }
@@ -151,9 +198,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a double-precision floating-point value from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public double? ReadDouble(long position)
+        public double? ReadDouble(long position = 0)
         {
             return this.ReaderStrategy.ReadDouble(position);
         }
@@ -161,9 +209,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a 16-bit integer from the accessor.
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public short? ReadInt16(long position)
+        public short? ReadInt16(long position = 0)
         {
             return this.ReaderStrategy.ReadInt16(position);
         }
@@ -171,9 +220,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a 32-bit integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public int? ReadInt32(long position)
+        public int? ReadInt32(long position = 0)
         {
             return this.ReaderStrategy.ReadInt32(position);
         }
@@ -181,9 +231,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a 64-bit integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public long? ReadInt64(long position)
+        public long? ReadInt64(long position = 0)
         {
             return this.ReaderStrategy.ReadInt64(position);
         }
@@ -191,9 +242,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads an 8-bit signed integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public sbyte? ReadSByte(long position)
+        public sbyte? ReadSByte(long position = 0)
         {
             return this.ReaderStrategy.ReadSByte(position);
         }
@@ -201,9 +253,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads a single-precision floating-point value from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public float? ReadSingle(long position)
+        public float? ReadSingle(long position = 0)
         {
             return this.ReaderStrategy.ReadSingle(position);
         }
@@ -211,9 +264,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads an unsigned 16-bit integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public ushort? ReadUInt16(long position)
+        public ushort? ReadUInt16(long position = 0)
         {
             return this.ReaderStrategy.ReadUInt16(position);
         }
@@ -221,9 +275,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads an unsigned 32-bit integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public uint? ReadUInt32(long position)
+        public uint? ReadUInt32(long position = 0)
         {
             return this.ReaderStrategy.ReadUInt32(position);
         }
@@ -231,9 +286,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reads an unsigned 64-bit integer from the accessor
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
         /// <returns></returns>
-        public ulong? ReadUInt64(long position)
+        public ulong? ReadUInt64(long position = 0)
         {
             return this.ReaderStrategy.ReadUInt64(position);
         }
@@ -265,7 +321,7 @@ namespace WinSysInfo.PEView.Process
                     this.MemoryFile = null;
                 }
 
-                this.ReaderStrategy.Close();
+                this.CloseReader();
             }
         }
 

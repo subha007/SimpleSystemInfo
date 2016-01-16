@@ -22,7 +22,39 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// Get or set the main data object
         /// </summary>
-        public TLayoutType Data { get; set; }
+        protected TLayoutType actualData;
+        public TLayoutType Data { get { return actualData; } }
+
+        /// <summary>
+        /// Set the data
+        /// </summary>
+        /// <typeparam name="TLayoutType"></typeparam>
+        /// <param name="model"></param>
+        public void SetData(TLayoutType model)
+        {
+            this.actualData = model;
+        }
+
+        /// <summary>
+        /// Set the data
+        /// </summary>
+        /// <typeparam name="object"></typeparam>
+        /// <param name="model"></param>
+        public void SetData(object model)
+        {
+            this.actualData = (TLayoutType)model;
+        }
+
+        /// <summary>
+        /// Get the offset
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public long GetOffset(string fieldName)
+        {
+            IntPtr offset = Marshal.OffsetOf(typeof(TLayoutType), fieldName);
+            return offset.ToInt64();
+        }
 
         /// <summary>
         /// Get the size of the data

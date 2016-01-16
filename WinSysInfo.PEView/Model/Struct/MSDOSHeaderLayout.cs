@@ -24,7 +24,8 @@ namespace WinSysInfo.PEView.Model
     public struct MSDOSHeaderLayout
     {
         /// <summary>
-        /// Generally ID='MZ'
+        /// Generally ID='MZ'. This is the DOS executable signature. 
+        /// It stands for Mark Zbikowski
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
         public char[] Magic;
@@ -75,12 +76,14 @@ namespace WinSysInfo.PEView.Model
         public ushort Checksum;
 
         /// <summary>
-        /// CS:IP relative to start of executable (entry point)
+        /// CS:IP relative to start of executable (entry point). Initial value of
+        /// the IP register.
         /// </summary>
         public ushort InitialIP;
 
         /// <summary>
-        /// Initial relative CS value
+        /// Initial value of the CS register, relative to the segment the program
+        /// was loaded at
         /// </summary>
         public ushort InitialRelativeCS;
 

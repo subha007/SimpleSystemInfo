@@ -21,7 +21,7 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Data mapping
         /// </summary>
-        public Dictionary<EnumReaderLayoutType, object> FileData { get; set; }
+        public COFFNavigator Navigator { get; set; }
 
         /// <summary>
         /// Construct the base PE browser
@@ -30,7 +30,7 @@ namespace WinSysInfo.PEView.Process
         public COFFBrowserBase(string fullPEFilePath)
         {
             this.Reader = new ObjectFileReader(fullPEFilePath);
-            this.FileData = new Dictionary<EnumReaderLayoutType, object>();
+            this.Navigator = new COFFNavigator();
         }
 
         /// <summary>
@@ -39,30 +39,57 @@ namespace WinSysInfo.PEView.Process
         public void Read()
         {
             // Check if this is PE / COFF
-            this.Reader.CreateSequentialAccess(0, LayoutModel<MSDOSHeaderLayout>.DataSize +
-                                            LayoutModel<NTHeaderLayout>.DataSize);
+            this.Reader.CreateSequentialAccess();
 
             // Check if this is a PE/COFF file.
-            byte[] sigBytes = this.Reader.ReadBytes(0, 2);
-            char[] sigchars = System.Text.Encoding.UTF8.GetString(sigBytes).ToCharArray();
+            char[] sigchars = System.Text.Encoding.UTF8.GetString(
+                                    this.Reader.PeekBytes(2))
+                                    .ToCharArray();
 
+            bool bHasPEHeader = false;
             if(sigchars.SequenceEqual(ConstantWinCOFFImage.MSDOSMagic) == true)
             {
                 // PE/COFF, seek through MS-DOS compatibility stub and 4-byte
                 // PE signature to find 'normal' COFF header.
-                this.FileData.Add(EnumReaderLayoutType.MSDOS_HEADER,
-                    (LayoutModel<MSDOSHeaderLayout>) this.Reader.ReadLayout<MSDOSHeaderLayout>(0));
+                this.Navigator.SetData(EnumReaderLayoutType.MSDOS_HEADER,
+                                  this.Reader.ReadLayout<MSDOSHeaderLayout>());
+
+                // Read the MS DOS Stub
+                LayoutModel<MSDOSHeaderLayout> dosHeaderbObj = 
+                    this.Navigator.GetData<MSDOSHeaderLayout>(EnumReaderLayoutType.MSDOS_HEADER);
+
+                MSDOSStubLayoutModel stubObj = new MSDOSStubLayoutModel();
+                int size = (int)dosHeaderbObj.Data.AddressOfNewExeHeader - (int)dosHeaderbObj.GetOffset("AddressOfNewExeHeader");
+                stubObj.SetData(this.Reader.ReadBytes(size));
+                this.Navigator.SetData(EnumReaderLayoutType.MSDOS_STUB, stubObj);
 
                 // Check the PE magic bytes. ("PE\0\0")
-                this.FileData.Add(EnumReaderLayoutType.NT_HEADER,
-                    (LayoutModel<NTHeaderLayout>) this.Reader.ReadLayout<NTHeaderLayout>(0));
+                // Check if this is a PE/COFF file.
+                sigchars = System.Text.Encoding.UTF8.GetString(
+                                        this.Reader.PeekBytes(2))
+                                        .ToCharArray();
+                if(sigchars.SequenceEqual(ConstantWinCOFFImage.PEMagic) == true)
+                {
+                    this.Navigator.SetData(EnumReaderLayoutType.NT_HEADER,
+                                     this.Reader.ReadLayout<NTHeaderLayout>());
+                }
 
-                NTHeaderLayout model = (NTHeaderLayout)(this.FileData[EnumReaderLayoutType.NT_HEADER]);
-                if(model.Signature.SequenceEqual(ConstantWinCOFFImage.PEMagic) == false)
-                    return;
+                bHasPEHeader = true;
             }
+            
+            // Read COFF Header
+            this.Navigator.SetData(EnumReaderLayoutType.COFF_FILE_HEADER,
+                                     this.Reader.ReadLayout<COFFFileHeader>());
 
-            // Read COFF header
+            // It might be a bigobj file, let's check.  Note that COFF bigobj and COFF
+            // import libraries share a common prefix but bigobj is more restrictive.
+            LayoutModel<COFFFileHeader> coffHeaderbObj =
+                this.Navigator.GetData<COFFFileHeader>(EnumReaderLayoutType.COFF_FILE_HEADER);
+            if(!bHasPEHeader && 
+                coffHeaderbObj.Data.Machine != EnumCOFFHeaderMachineTypes.IMAGE_FILE_MACHINE_UNKNOWN &&
+                coffHeaderbObj.Data.NumberOfSections == (uint)0xFFFF)
+            { 
+            }
         }
     }
 }

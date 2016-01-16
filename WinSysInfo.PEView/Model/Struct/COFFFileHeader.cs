@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace WinSysInfo.PEView.Model
     /// number of sections to 96.
     /// <see cref="http://osxr.org:8080/android/source/external/llvm/include/llvm/Support/COFF.h"/>
     /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct COFFFileHeader
     {
         /// <summary>
@@ -25,7 +27,6 @@ namespace WinSysInfo.PEView.Model
         /// The number of sections. This indicates the size of the section 
         /// table, which immediately follows the headers
         /// </summary>
-        [MaxLength(96)]
         public ushort NumberOfSections { get; set; }
 
         /// <summary>
@@ -58,7 +59,6 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// The flags that indicate the attributes of the file
         /// </summary>
-        [EnumDataType(typeof(EnumCOFFHeaderCharacteristics))]
-        public uint Characteristics { get; set; }
+        public EnumCOFFHeaderCharacteristics Characteristics { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinSysInfo.PEView.Model
 {
-    public enum EnumCOFFHeaderMachineTypes
+    public enum EnumCOFFHeaderMachineTypes : ushort
     {
         MT_Invalid = 0XFFFF,
 

@@ -43,6 +43,8 @@
     <Compile Include="Converter\DateTimeConverter.cs" />
     <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\LayoutModel.cs" />
+    <Compile Include="Model\Class\MSDOSStubLayoutModel.cs" />
+    <Compile Include="Model\Enum\EnumReaderType.cs" />
     <Compile Include="Model\Struct\AttributeCertificateTableImageOnlyFormat.cs" />
     <Compile Include="Model\Struct\AuxiliarybfAndefSymbolLayout.cs" />
     <Compile Include="Model\Struct\AuxiliaryCLRTokenLayout.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Model\Struct\ImportHeaderLayout.cs" />
     <Compile Include="Model\Struct\ImportLookupTableEntry32.cs" />
     <Compile Include="Model\Struct\MSDOSHeaderLayout.cs" />
+    <Compile Include="Model\Struct\MSDOSStubLayout.cs" />
     <Compile Include="Model\Struct\NTHeaderLayout.cs" />
     <Compile Include="Model\Struct\OptionalHeaderDataDirImageOnly.cs" />
     <Compile Include="Model\Struct\OptionalHeaderStandardFields.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon1.cs" />
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon2.cs" />
     <Compile Include="Process\BitConverterExtended.cs" />
+    <Compile Include="Process\COFFNavigator.cs" />
     <Compile Include="Process\COFFReaderProperty.cs" />
     <Compile Include="Process\MemoryRandomAccess.cs" />
     <Compile Include="Process\MemorySequentialAccess.cs" />
