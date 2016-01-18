@@ -164,7 +164,7 @@ namespace WinSysInfo.PEView.Process
                 // Seek Position from current
                 this.IoAccess.Seek(position, System.IO.SeekOrigin.Current);
 
-                byte[] bytes = this.ReadBytes(LayoutModel<TLayoutType>.DataSize, position);
+                byte[] bytes = this.ReadBytes((int)LayoutModel<TLayoutType>.DataSize, position);
 
                 GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 model.SetData(Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(TLayoutType)));

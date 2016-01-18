@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,8 @@ namespace WinSysInfo.PEView.Model
     /// and they must be a multiple of the SectionAlignment value in the optional header. Each section 
     /// header (section table entry) has the following format, for a total of 40 bytes per entry.
     /// </summary>
-    public class COFFSectionTableLayout
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct COFFSectionTableLayout
     {
         /// <summary>
         /// An 8-byte, null-padded UTF-8 encoded string. If the string is exactly 8 characters long, 
@@ -28,12 +30,8 @@ namespace WinSysInfo.PEView.Model
         /// Executable images do not use a string table and do not support section names longer than 8 
         /// characters. Long names in object files are truncated if they are emitted to an executable file.
         /// </summary>
-        private char[] name = new char[(int)EnumCOFFSizes.NameSize];
-        public char[] Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
-        }
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)EnumCOFFSizes.NameSize)]
+        public char[] Name;
 
         /// <summary>
         /// The total size of the section when loaded into memory. If this value is greater than SizeOfRawData,

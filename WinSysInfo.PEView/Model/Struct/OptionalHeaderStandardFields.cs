@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,8 @@ namespace WinSysInfo.PEView.Model
     /// loading and running an executable file. They are unchanged 
     /// for the PE32+ format
     /// </summary>
-    public class OptionalHeaderStandardFields
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct OptionalHeaderStandardFields
     {
         /// <summary>
         /// The unsigned integer that identifies the state of the image file.

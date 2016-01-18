@@ -59,11 +59,11 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// Get the size of the data
         /// </summary>
-        public static int DataSize
+        public static uint DataSize
         {
             get
             {
-                return Marshal.SizeOf(typeof(TLayoutType));
+                return (uint)Marshal.SizeOf(typeof(TLayoutType));
             }
         }
     }

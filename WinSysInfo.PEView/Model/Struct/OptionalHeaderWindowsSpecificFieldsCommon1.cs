@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,8 @@ namespace WinSysInfo.PEView.Model
     /// <summary>
     /// These are common fields for 32 and 32+ extension to the COFF optional header format.
     /// </summary>
-    public class OptionalHeaderWindowsSpecificFieldsCommon1
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct OptionalHeaderWindowsSpecificFieldsCommon1
     {
         /// <summary>
         /// The alignment (in bytes) of sections when they are loaded into 

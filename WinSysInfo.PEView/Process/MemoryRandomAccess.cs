@@ -89,6 +89,15 @@ namespace WinSysInfo.PEView.Process
             }
         }
 
+        /// <summary>
+        /// Get or set the file offset for which this intermediate reader is created
+        /// </summary>
+        private long fileOffset;
+        public long FileOffset
+        {
+            get { return fileOffset; }
+        }
+
         #endregion
 
         #region Peek

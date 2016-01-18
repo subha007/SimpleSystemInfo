@@ -81,5 +81,39 @@ namespace WinSysInfo.PEView.Process
             else
                 this.LayoutOrder.Add(enumVal);
         }
+
+        /// <summary>
+        /// Set the data list
+        /// </summary>
+        /// <typeparam name="TLayoutModel"></typeparam>
+        /// <param name="enumVal"></param>
+        /// <returns></returns>
+        public void SetData<TLayoutModel>(EnumReaderLayoutType enumVal, List<LayoutModel<TLayoutModel>> modelList,
+            int position = -1)
+            where TLayoutModel : struct
+        {
+            if (this.FileData.ContainsKey(enumVal) == true)
+                this.FileData[enumVal] = modelList;
+            else
+                this.FileData.Add(enumVal, modelList);
+
+            int fIndex = this.LayoutOrder.FindIndex(e => e == enumVal);
+            if (fIndex == position) return;
+            if (fIndex >= 0)
+                this.LayoutOrder.Insert(position, enumVal);
+            else
+                this.LayoutOrder.Add(enumVal);
+        }
+
+        /// <summary>
+        /// Delete the model
+        /// </summary>
+        /// <param name="enumVal"></param>
+        public void Delete(EnumReaderLayoutType enumVal)
+        {
+            this.LayoutOrder.Remove(enumVal);
+            if (this.FileData.ContainsKey(enumVal) == true)
+                this.FileData.Remove(enumVal);
+        }
     }
 }

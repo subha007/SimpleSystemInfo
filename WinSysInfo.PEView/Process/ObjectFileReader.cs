@@ -83,7 +83,7 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Close the Reader
         /// </summary>
-        protected void CloseReader()
+        public void CloseReader()
         {
             // If previous accessor is still open close and clean it
             if (this.ReaderStrategy != null)
@@ -91,6 +91,14 @@ namespace WinSysInfo.PEView.Process
                 this.ReaderStrategy.Close();
                 this.ReaderStrategy = null;
             }
+        }
+
+        /// <summary>
+        /// Get or set the file offset for which this intermediate reader is created
+        /// </summary>
+        public long FileOffset
+        {
+            get { return this.ReaderStrategy.FileOffset; }
         }
 
         #region Peek

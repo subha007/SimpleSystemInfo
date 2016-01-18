@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,14 +13,15 @@ namespace WinSysInfo.PEView.Model
     /// loaded into memory so that the system can use them at run time. 
     /// A data directory is an 8byte field that has the following declaration.
     /// </summary>
-    public class OptionalHeaderDataDirImageOnly
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct OptionalHeaderDataDirImageOnly
     {
         /// <summary>
         /// The first field, VirtualAddress, is actually the RVA of the table.
         /// The RVA is the address of the table relative to the base address 
         /// of the image when the table is loaded
         /// </summary>
-        public uint VirtualAddress { get; set; }
+        public uint RelativeVirtualAddress { get; set; }
 
         /// <summary>
         /// The second field gives the size in bytes. 

@@ -14,18 +14,6 @@ namespace WinSysInfo.PEView.Interface
     {
         #region OpenClose
 
-        ///// <summary>
-        ///// Open the file for read
-        ///// </summary>
-        ///// <param name="offset">The offset in the file from which to create file reader</param>
-        //void Open();
-
-        ///// <summary>
-        ///// Open a partial section of the file for read for size
-        ///// </summary>
-        ///// <param name="size">The size of file from offset to create a reader</param>
-        //void Open(long size);
-
         /// <summary>
         /// Open a partial section of the file for read from the offset and size
         /// </summary>
@@ -42,6 +30,11 @@ namespace WinSysInfo.PEView.Interface
         /// Get or set if file is open
         /// </summary>
         bool IsOpen { get; set; }
+
+        /// <summary>
+        /// Get or set the file offset for which this intermediate reader is created
+        /// </summary>
+        long FileOffset { get; }
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,8 @@ namespace WinSysInfo.PEView.Model
     /// loader in Windows.
     /// Used for PE32 files
     /// </summary>
-    public class OptionalHeaderWindowsSpecificFields32
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct OptionalHeaderWindowsSpecificFields32
     {
         /// <summary>
         /// The preferred address of the first byte of image when loaded 

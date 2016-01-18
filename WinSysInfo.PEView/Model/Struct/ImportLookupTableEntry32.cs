@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace WinSysInfo.PEView.Model
 {
@@ -15,7 +16,8 @@ namespace WinSysInfo.PEView.Model
     /// This also happens to be the same format used by the Import Address Table
     /// when it is initially written out to the image.
     /// </summary>
-    public class ImportLookupTableEntry32
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct ImportLookupTableEntry32
     {
         public uint Data { get; set; }
 

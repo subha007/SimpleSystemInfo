@@ -13,10 +13,9 @@ namespace WinSysInfo.PEView.Model
     /// The special value -1 should therefore be taken to mean its unsigned 
     /// equivalent, 0xFF.
     /// </summary>
-    public enum EnumSymbolStorageClass
+    public enum EnumSymbolStorageClass : byte
     {
-        SSC_Invalid = 0xff,
-        IMAGE_SYM_CLASS_END_OF_FUNCTION = -1,  ///< Physical end of function
+        IMAGE_SYM_CLASS_END_OF_FUNCTION = 0xff,  ///< Physical end of function
         IMAGE_SYM_CLASS_NULL = 0,   ///< No symbol
         IMAGE_SYM_CLASS_AUTOMATIC = 1,   ///< Stack variable
         IMAGE_SYM_CLASS_EXTERNAL = 2,   ///< External symbol
