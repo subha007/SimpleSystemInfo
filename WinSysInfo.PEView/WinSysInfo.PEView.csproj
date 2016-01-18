@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\DateTimeConverter.cs" />
+    <Compile Include="Interface\ICOFFBrowser.cs" />
+    <Compile Include="Interface\ICOFFNavigator.cs" />
     <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\COFFFileHeaderLayoutModel.cs" />
     <Compile Include="Model\Class\LayoutModel.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Process\MemorySequentialAccess.cs" />
     <Compile Include="Process\ObjectFileReader.cs" />
     <Compile Include="Process\COFFBrowserBase.cs" />
+    <Compile Include="Process\ReadFileSectionCondition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

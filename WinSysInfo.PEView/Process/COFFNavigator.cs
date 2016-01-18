@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Process
@@ -11,7 +12,7 @@ namespace WinSysInfo.PEView.Process
     /// The class to store file structure portion and navigate
     /// through
     /// </summary>
-    public class COFFNavigator
+    public class COFFNavigator : ICOFFNavigator
     {
         /// <summary>
         /// Data mapping
