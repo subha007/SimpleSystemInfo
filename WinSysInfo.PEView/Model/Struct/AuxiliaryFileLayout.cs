@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     /// <summary>
     /// This format follows a symbol-table record with storage class FILE (103). The symbol name

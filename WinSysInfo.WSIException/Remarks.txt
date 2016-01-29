@@ -1,0 +1,1 @@
+﻿Good discussion and type of scenarios to cover for exception handling: http://www.codeproject.com/Articles/9538/Exception-Handling-Best-Practices-in-NET

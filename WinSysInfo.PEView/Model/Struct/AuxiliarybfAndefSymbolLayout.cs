@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     /// <summary>
     /// For each function definition in the symbol table, three items describe the beginning, 

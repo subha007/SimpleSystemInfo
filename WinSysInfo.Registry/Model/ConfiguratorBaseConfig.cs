@@ -1,17 +1,12 @@
 ﻿using log4net;
 using SysInfoInventryWinReg.Generic;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SysInfoInventryWinReg.Model
 {
     /// <summary>
     /// The class is used as a filter  during the processing of xml config file data using
-    /// internal class <see cref="ProcessConfigData"/>
     /// </summary>
     public class ConfiguratorBaseConfig
     {

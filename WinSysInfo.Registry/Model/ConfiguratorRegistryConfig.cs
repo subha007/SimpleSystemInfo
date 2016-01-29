@@ -2,10 +2,7 @@
 using SysInfoInventryWinReg.Process;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace SysInfoInventryWinReg.Model
 {
@@ -106,7 +103,8 @@ namespace SysInfoInventryWinReg.Model
                 if (matchXYPath.Groups.Count > 0)
                     throw new KeyNotFoundException("No data found to parse means data is not correct or regex is wrong.");
 
-                if (string.Compare(matchXYPath.Groups[ConstantsXmlRegistryConfig.RegexXmlTagGroup].Value, ConstantsXmlRegistryConfig.PathXmlTag, false) != 0)
+                if (string.Compare(matchXYPath.Groups[ConstantsXmlRegistryConfig.RegexXmlTagGroup].Value, 
+                    ConstantsXmlRegistryConfig.PathXmlTag, StringComparison.OrdinalIgnoreCase) != 0)
                     throw new KeyNotFoundException(string.Format("{0} not found", ConstantsXmlRegistryConfig.PathXmlTag));
 
                 for(int indxData = 0; indxData < matchXYPath.Groups.Count; ++indxData)

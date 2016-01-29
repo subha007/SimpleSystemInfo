@@ -1,9 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SysInfoInventryWinReg.Generic
 {
@@ -99,7 +94,7 @@ namespace SysInfoInventryWinReg.Generic
         /// <summary>
         /// Convert from RegistryHive to string
         /// </summary>
-        /// <param name="regHiveName"></param>
+        /// <param name="regHive"></param>
         /// <returns></returns>
         public static string ConvertTo(RegistryHive regHive)
         {

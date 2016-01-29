@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Interface
 {
-    public interface ICOFFNavigator
+    public interface ICOFFDataStore
     {
         /// <summary>
         /// Data mapping
@@ -25,8 +21,8 @@ namespace WinSysInfo.PEView.Interface
         /// <typeparam name="TLayoutModel"></typeparam>
         /// <param name="enumVal"></param>
         /// <returns></returns>
-        LayoutModel<TLayoutModel> GetData<TLayoutModel>(EnumReaderLayoutType enumVal)
-            where TLayoutModel : struct;
+        TLayoutModel GetData<TLayoutModel>(EnumReaderLayoutType enumVal)
+            where TLayoutModel : class;
 
         /// <summary>
         /// Get the data
@@ -34,27 +30,25 @@ namespace WinSysInfo.PEView.Interface
         /// <typeparam name="TLayoutModel"></typeparam>
         /// <param name="index"></param>
         /// <returns></returns>
-        LayoutModel<TLayoutModel> GetData<TLayoutModel>(int index)
-            where TLayoutModel : struct;
+        TLayoutModel GetData<TLayoutModel>(int index)
+            where TLayoutModel : class;
 
         /// <summary>
         /// Set the data
         /// </summary>
         /// <typeparam name="TLayoutModel"></typeparam>
         /// <param name="enumVal"></param>
+        /// <param name="modelList"></param>
+        /// <param name="position"></param>
         /// <returns></returns>
-        void SetData<TLayoutModel>(EnumReaderLayoutType enumVal, LayoutModel<TLayoutModel> model,
+        void SetData<TLayoutModel>(EnumReaderLayoutType enumVal, TLayoutModel modelList,
             int position = -1)
-            where TLayoutModel : struct;
+            where TLayoutModel : class;
 
         /// <summary>
-        /// Set the data list
+        /// Delete the model
         /// </summary>
-        /// <typeparam name="TLayoutModel"></typeparam>
         /// <param name="enumVal"></param>
-        /// <returns></returns>
-        void SetData<TLayoutModel>(EnumReaderLayoutType enumVal, List<LayoutModel<TLayoutModel>> modelList,
-            int position = -1)
-            where TLayoutModel : struct;
+        void Delete(EnumReaderLayoutType enumVal);
     }
 }

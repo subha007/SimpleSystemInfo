@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     /// <summary>
     /// “Weak externals” are a mechanism for object files that allows flexibility at link time. 

@@ -46,12 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentCheck.cs" />
+    <Compile Include="ExFactoryArgumentCheck.cs" />
     <Compile Include="CustomExceptionMessage.cs" />
-    <Compile Include="ExceptionFactory.cs" />
+    <Compile Include="ExFactoryGeneric.cs" />
     <Compile Include="ExceptionLevel.cs" />
+    <Compile Include="ExceptionModel.cs" />
+    <Compile Include="ExceptionType.cs" />
     <Compile Include="IExceptionMessage.cs" />
     <Compile Include="IExceptionMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Remarks.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

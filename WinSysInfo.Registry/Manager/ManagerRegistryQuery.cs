@@ -1,11 +1,4 @@
-﻿using SysInfoInventryWinReg.Generic;
-using SysInfoInventryWinReg.Model;
-using SysInfoInventryWinReg.Process;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SysInfoInventryWinReg.Model;
 
 namespace SysInfoInventryWinReg.Manager
 {
@@ -55,7 +48,7 @@ namespace SysInfoInventryWinReg.Manager
         /// <summary>
         /// The default constructor to initialize the manager instance of querying the Windows regsitry
         /// </summary>
-        /// <param name="ePathName"></param>
+        /// <param name="regConfigReaderConfigurator"></param>
         /// <param name="queryprocConfigurator"></param>
         public ManagerRegistryQuery(ConfiguratorRegistryConfig regConfigReaderConfigurator, ConfiguratorRegistryQuery queryprocConfigurator)
         {

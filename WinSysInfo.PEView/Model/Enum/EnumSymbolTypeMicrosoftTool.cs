@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model.Enum
+﻿namespace WinSysInfo.PEView.Model.Enum
 {
     /// <summary>
     /// Microsoft tools use this field only to indicate whether the symbol is a function, so that 

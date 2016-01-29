@@ -1,15 +1,7 @@
-﻿using Microsoft.Win32;
-using SysInfoInventryWinReg.Attribute;
-using SysInfoInventryWinReg.Generic;
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using WinSysInfo.WSIException;
 
@@ -93,8 +85,7 @@ namespace SysInfoInventryWinReg.Model
             ModelRegistryKeyValue regValue = null;
             if(this.KeyValuePairs != null)
                 regValue = this.KeyValuePairs
-                                .Where(x => x != null && x.Name == uniqueName)
-                                .FirstOrDefault();
+                                .FirstOrDefault(x => x != null && x.Name == uniqueName);
             else
                 this.KeyValuePairs = new List<ModelRegistryKeyValue>();
 
@@ -117,9 +108,8 @@ namespace SysInfoInventryWinReg.Model
 
             if(this.SubKeys != null)
                 subkey = this.SubKeys
-                             .Where(x => x != null && x.RegsitryPath != null &&
-                                (x.RegsitryPath.IsSubKeyFound(uniqueName) == true))
-                             .FirstOrDefault();
+                             .FirstOrDefault(x => x != null && x.RegsitryPath != null &&
+                                (x.RegsitryPath.IsSubKeyFound(uniqueName) == true));
             else
                 this.SubKeys = new List<ModelRegistryKey>();
 
@@ -139,10 +129,10 @@ namespace SysInfoInventryWinReg.Model
         /// <param name="message"></param>
         public void AddLog(ExceptionLevel level, string message)
         {
-            if(this.ExceptionData == null)
-                this.ExceptionData = ExceptionFactory.GetNewInstance();
+            //if(this.ExceptionData == null)
+            //    this.ExceptionData = ExFactoryGeneric.GetNewInstance();
 
-            this.ExceptionData.AddLog(level, message);
+            //this.ExceptionData.AddLog(level, message);
         }
 
         /// <summary>

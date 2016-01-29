@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
@@ -25,6 +22,11 @@ namespace WinSysInfo.PEView.Process
         /// </summary>
         protected MemoryMappedViewStream IoAccess { get; set; }
 
+        /// <summary>
+        /// Reference to the Reader property passed from the file parser object
+        /// </summary>
+        public ICOFFReaderProperty ReaderProperty { get; set; }
+
         #endregion
 
         #region Constructors
@@ -33,23 +35,13 @@ namespace WinSysInfo.PEView.Process
         /// Basic constructor
         /// </summary>
         /// <param name="memoryFile"></param>
-        public MemorySequentialAccess(MemoryMappedFile memoryFile)
-            : this(memoryFile, 0, 0)
+        public MemorySequentialAccess(ICOFFReaderProperty readerProperty)
         {
-        }
+            if(readerProperty == null) throw new ArgumentNullException("readerProperty");
+            if(readerProperty.TryValidate() == false) throw new InvalidOperationException("readerProperty has invalid data");
+            this.ReaderProperty = readerProperty;
 
-        /// <summary>
-        /// Basic constructor
-        /// </summary>
-        /// <param name="memoryFile"></param>
-        public MemorySequentialAccess(MemoryMappedFile memoryFile, long offset, long size)
-        {
-            this.MemoryFile = memoryFile;
-            if(this.MemoryFile != null)
-            {
-                this.IoAccess = this.MemoryFile.CreateViewStream(offset, size, MemoryMappedFileAccess.Read);
-                this.IsOpen = true;
-            }
+            this.MemoryFile = MemoryMappedFile.CreateFromFile(readerProperty.FullFilePath, FileMode.Open, readerProperty.UniqueFileName);
         }
 
         #endregion
@@ -72,12 +64,15 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Open the random accessor
         /// </summary>
-        /// <param name="offset">The offset in the file from which to create file reader</param>
-        /// <param name="size">The size of file from offset to create a reader</param>
-        public void Open(long offset, long size)
+        public void Open()
         {
+            if (this.ReaderProperty == null) throw new ArgumentNullException("The Reader property is null and must be initialized");
+            
             if(this.IsOpen == false)
-                this.IoAccess = this.MemoryFile.CreateViewStream(offset, size, MemoryMappedFileAccess.Read);
+                this.IoAccess = this.MemoryFile.CreateViewStream(
+                    ReaderProperty.OffsetOfFile
+                    , ReaderProperty.SizeOfReader
+                    , MemoryMappedFileAccess.Read);
 
             this.IsOpen = true;
         }
@@ -113,7 +108,8 @@ namespace WinSysInfo.PEView.Process
         #region Peek
 
         /// <summary>
-        /// Peek ahead bytes but do not chnage the seek pointer in sequential access
+        /// Peek ahead bytes but do not chnage the seek pointer in sequential access and read
+        /// independently of current file position
         /// </summary>
         /// <param name="position">The position in the file at which to begin reading
         /// relative to the current position in the file. Default is 0</param>
@@ -121,7 +117,9 @@ namespace WinSysInfo.PEView.Process
         /// <returns>A byte array</returns>
         public byte[] PeekBytes(int count = 1, long position = 0)
         {
-            using(MemoryMappedViewStream tempPeek = this.MemoryFile.CreateViewStream(position, count, MemoryMappedFileAccess.Read))
+            if (position < 0) position = this.FileOffset;
+            using(MemoryMappedViewStream tempPeek = 
+                this.MemoryFile.CreateViewStream(position, count, MemoryMappedFileAccess.Read))
             {
                 byte[] iodata = new byte[count];
                 tempPeek.Read(iodata, (int) 0, count);
@@ -129,7 +127,63 @@ namespace WinSysInfo.PEView.Process
             }
         }
 
+        /// <summary>
+        /// Peek ahead bytes but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="count">The number of bytes to read. Default 1.</param>
+        /// <returns>A byte array</returns>
+        public LayoutModel<TLayoutType> PeekStructure<TLayoutType>(int count = 1, long position = 0)
+            where TLayoutType : struct
+        {
+            LayoutModel<TLayoutType> model = new LayoutModel<TLayoutType>();
+
+            using (MemoryMappedViewStream tempPeek = this.MemoryFile.CreateViewStream(position, 
+                count, MemoryMappedFileAccess.Read))
+            {
+                MemorySequentialAccess.ReadLayoutHelper(tempPeek, model, position);
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Peek ahead ushort but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        public ushort PeekUShort(long position = 0)
+        {
+            byte[] bData = PeekBytes(2, position);
+            return BitConverter.ToUInt16(bData, 0);
+        }
+
         #endregion
+
+        #region Seek
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        public void SeekForward(long position)
+        {
+            // Seek Position from current
+            this.IoAccess.Seek(position, System.IO.SeekOrigin.Current);
+        }
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        public void SeekOriginal(long position)
+        {
+            // Seek Position from origin
+            this.IoAccess.Seek(position, System.IO.SeekOrigin.Begin);
+        }
+
+        #endregion Seek
 
         #region Reader With Position
 
@@ -152,19 +206,27 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Read a layout model
         /// </summary>
-        /// <typeparam name="T">The Layout Model value Type</typeparam>
+        /// <typeparam name="TLayoutType">The Layout Model value Type</typeparam>
         /// <param name="position">The position in the file at which to begin reading
         /// relative to the current position in the file. Default is 0</param>
         /// <param name="model">The structure to contain the read data</param>
         public void ReadLayout<TLayoutType>(LayoutModel<TLayoutType> model, long position = 0)
             where TLayoutType : struct
         {
-            if(this.IoAccess != null)
+            MemorySequentialAccess.ReadLayoutHelper(this.IoAccess, model, position);
+        }
+
+        private static void ReadLayoutHelper<TLayoutType>(MemoryMappedViewStream viewStream
+            , LayoutModel<TLayoutType> model
+            , long position = 0)
+            where TLayoutType : struct
+        {
+            if (viewStream != null)
             {
                 // Seek Position from current
-                this.IoAccess.Seek(position, System.IO.SeekOrigin.Current);
+                viewStream.Seek(position, System.IO.SeekOrigin.Current);
 
-                byte[] bytes = this.ReadBytes((int)LayoutModel<TLayoutType>.DataSize, position);
+                byte[] bytes = ReadBytes(viewStream, (int)LayoutModel<TLayoutType>.DataSize, position);
 
                 GCHandle handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 model.SetData(Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(TLayoutType)));
@@ -188,6 +250,30 @@ namespace WinSysInfo.PEView.Process
 
                 byte[] iodata = new byte[count];
                 this.IoAccess.Read(iodata, (int) 0, count);
+                return iodata;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Read bytes
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="viewStream"></param>
+        /// <param name="count">The number of bytes to read. Default is 1.</param>
+        /// <returns>A byte array</returns>
+        private static byte[] ReadBytes(MemoryMappedViewStream viewStream, 
+            int count = 1, long position = 0)
+        {
+            if (viewStream != null && count > 0)
+            {
+                // Seek Position from current
+                viewStream.Seek(position, System.IO.SeekOrigin.Current);
+
+                byte[] iodata = new byte[count];
+                viewStream.Read(iodata, (int)0, count);
                 return iodata;
             }
 
@@ -452,6 +538,14 @@ namespace WinSysInfo.PEView.Process
             if(itIsSafeToAlsoFreeManagedObjects == true)
             {
                 this.Close();
+
+                if (this.MemoryFile != null)
+                    this.MemoryFile.Dispose();
+
+                if(this.ReaderProperty != null)
+                {
+                    this.ReaderProperty.Cleanup();
+                }
             }
         }
 

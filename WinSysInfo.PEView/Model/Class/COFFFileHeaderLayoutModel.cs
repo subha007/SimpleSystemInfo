@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     public class COFFFileHeaderLayoutModel : LayoutModel<COFFFileHeader>
     {
+        public COFFFileHeaderLayoutModel(LayoutModel<COFFFileHeader> baseObj)
+            :base(baseObj)
+        {
+        }
+
         public bool IsImportLibrary()
         {
             return this.actualData.NumberOfSections == 0XFFFF;

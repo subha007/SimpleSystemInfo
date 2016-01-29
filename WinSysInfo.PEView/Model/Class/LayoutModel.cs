@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using WinSysInfo.PEView.Interface;
 
 namespace WinSysInfo.PEView.Model
 {
@@ -24,6 +19,14 @@ namespace WinSysInfo.PEView.Model
         /// </summary>
         protected TLayoutType actualData;
         public TLayoutType Data { get { return actualData; } }
+
+        public LayoutModel() { }
+
+        public LayoutModel(LayoutModel<TLayoutType> obj)
+        {
+            this.LayoutType = obj.LayoutType;
+            this.actualData = obj.Data;
+        }
 
         /// <summary>
         /// Set the data
@@ -50,14 +53,14 @@ namespace WinSysInfo.PEView.Model
         /// </summary>
         /// <param name="fieldName"></param>
         /// <returns></returns>
-        public long GetOffset(string fieldName)
+        public static long GetOffset(string fieldName)
         {
             IntPtr offset = Marshal.OffsetOf(typeof(TLayoutType), fieldName);
             return offset.ToInt64();
         }
 
         /// <summary>
-        /// Get the size of the data
+        /// Get the size of the structure
         /// </summary>
         public static uint DataSize
         {

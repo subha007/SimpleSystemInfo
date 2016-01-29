@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WinSysInfo.PEView.Process;
 
 namespace WinSysInfo.UnitTest
@@ -10,7 +9,8 @@ namespace WinSysInfo.UnitTest
         [TestMethod]
         public void TestReadPE()
         {
-            COFFBrowserBase browser = new COFFBrowserBase(@"C:\Users\user\Downloads\PEview\PEview.exe");
+            COFFReaderProperty readProperty = new COFFReaderProperty(@"C:\TEMP\PEview\WinSysInfoTest.exe");
+            COFFBrowserBase browser = new COFFBrowserBase(readProperty);
             browser.Read();
         }
     }

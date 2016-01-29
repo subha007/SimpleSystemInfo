@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WinSysInfo.PEView.Model
 {
@@ -16,7 +12,7 @@ namespace WinSysInfo.PEView.Model
         NONE = 0x00000000,
         MSDOS_HEADER = 0x00000001,
         MSDOS_STUB = MSDOS_HEADER + 1,
-        NT_HEADER = MSDOS_HEADER + 1,
+        NT_HEADER = MSDOS_STUB + 1,
         COFF_FILE_HEADER = NT_HEADER + 1,
         COFF_BIGOBJ_FILE_HEADER = COFF_FILE_HEADER + 1,
         OPT_HEADER_STD_FIELDS = COFF_BIGOBJ_FILE_HEADER + 1,

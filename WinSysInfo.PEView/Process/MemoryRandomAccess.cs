@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
@@ -26,6 +23,11 @@ namespace WinSysInfo.PEView.Process
         /// </summary>
         protected MemoryMappedViewAccessor Accessor { get; set; }
 
+        /// <summary>
+        /// Reference to the Reader property passed from the file parser object
+        /// </summary>
+        public ICOFFReaderProperty ReaderProperty { get; set; }
+
         #endregion
 
         #region Constructors
@@ -33,26 +35,15 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Basic constructor
         /// </summary>
-        /// <param name="memoryFile"></param>
-        public MemoryRandomAccess(MemoryMappedFile memoryFile)
+        /// <param name="readerProperty"></param>
+        public MemoryRandomAccess(ICOFFReaderProperty readerProperty)
         {
-            this.MemoryFile = memoryFile;
-            this.IsOpen = false;
-        }
+            if (readerProperty == null) throw new ArgumentNullException("readerProperty");
+            if (readerProperty.TryValidate() == false) throw new InvalidOperationException("readerProperty has invalid data");
+            this.ReaderProperty = readerProperty;
 
-        /// <summary>
-        /// Basic constructor
-        /// </summary>
-        /// <param name="memoryFile"></param>
-        public MemoryRandomAccess(MemoryMappedFile memoryFile, long offset, long size)
-        {
-            this.MemoryFile = memoryFile;
-            this.IsOpen = false;
-            if(this.MemoryFile != null)
-            {
-                this.Accessor = this.MemoryFile.CreateViewAccessor(offset, size);
-                this.IsOpen = true;
-            }
+            this.MemoryFile = MemoryMappedFile.CreateFromFile(readerProperty.FullFilePath, FileMode.Open, readerProperty.FullFilePath);
+            this.fileOffset = 0;
         }
 
         #endregion
@@ -67,12 +58,10 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Open the random accessor
         /// </summary>
-        /// <param name="offset">The offset in the file from which to create file reader</param>
-        /// <param name="size">The size of file from offset to create a reader</param>
-        public void Open(long offset, long size)
+        public void Open()
         {
             if(this.IsOpen == false)
-                this.Accessor = this.MemoryFile.CreateViewAccessor(offset, size);
+                this.Accessor = this.MemoryFile.CreateViewAccessor(this.ReaderProperty.OffsetOfFile, this.ReaderProperty.SizeOfReader);
 
             this.IsOpen = true;
         }
@@ -126,7 +115,65 @@ namespace WinSysInfo.PEView.Process
             return null;
         }
 
+        /// <summary>
+        /// Peek ahead bytes but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="count">The number of bytes to read. Default 1.</param>
+        /// <returns>A byte array</returns>
+        public LayoutModel<TLayoutType> PeekStructure<TLayoutType>(int count = 1, long position = 0)
+            where TLayoutType : struct
+        {
+            LayoutModel<TLayoutType> model = new LayoutModel<TLayoutType>();
+
+            using (MemoryMappedViewAccessor tempPeek = this.MemoryFile.CreateViewAccessor(position,
+                count, MemoryMappedFileAccess.Read))
+            {
+                TLayoutType fileData;
+                tempPeek.Read(position, out fileData);
+                model.SetData(fileData);
+            }
+
+            return model;
+        }
+
+        /// <summary>
+        /// Peek ahead ushort but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        public ushort PeekUShort(long position = 0)
+        {
+            byte[] bData = PeekBytes(2, position);
+            return BitConverter.ToUInt16(bData, 0);
+        }
+
         #endregion
+
+        #region Seek
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        public void SeekForward(long position)
+        {
+            // Seek Position from current
+            
+        }
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        public void SeekOriginal(long position)
+        {
+            // Seek Position from origin
+            
+        }
+
+        #endregion Seek
 
         #region Reader
 
@@ -376,6 +423,14 @@ namespace WinSysInfo.PEView.Process
             if(itIsSafeToAlsoFreeManagedObjects == true)
             {
                 this.Close();
+
+                if (this.MemoryFile != null)
+                    this.MemoryFile.Dispose();
+
+                if (this.ReaderProperty != null)
+                {
+                    this.ReaderProperty.Cleanup();
+                }
             }
         }
 

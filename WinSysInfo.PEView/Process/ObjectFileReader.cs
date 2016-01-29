@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WinSysInfo.PEView.Interface;
 using WinSysInfo.PEView.Model;
 
@@ -50,8 +46,8 @@ namespace WinSysInfo.PEView.Process
             // If previous accessor is still open close and clean it
             this.CloseReader();
 
-            if(this.MemoryFile != null)
-                this.ReaderStrategy = new MemoryRandomAccess(this.MemoryFile, offset, size);
+            //if(this.MemoryFile != null)
+            //    this.ReaderStrategy = new MemoryRandomAccess(this.MemoryFile, offset, size);
         }
 
         /// <summary>
@@ -64,8 +60,8 @@ namespace WinSysInfo.PEView.Process
             // If previous accessor is still open close and clean it
             this.CloseReader();
 
-            if(this.MemoryFile != null)
-                this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile, offset, size);
+            //if(this.MemoryFile != null)
+            //    this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile, offset, size);
         }
 
         /// <summary>
@@ -76,8 +72,8 @@ namespace WinSysInfo.PEView.Process
             // If previous accessor is still open close and clean it
             this.CloseReader();
 
-            if (this.MemoryFile != null)
-                this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile);
+            //if (this.MemoryFile != null)
+            //    this.ReaderStrategy = new MemorySequentialAccess(this.MemoryFile);
         }
 
         /// <summary>
@@ -122,10 +118,9 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Read a layout model
         /// </summary>
-        /// <typeparam name="T">Layout Model Type</typeparam>
+        /// <typeparam name="TLayoutType">Layout Model Type</typeparam>
         /// <param name="position">The position in the file at which to begin reading
         /// relative to the current position in the file. Default is 0.</param>
-        /// <param name="model"></param>
         /// <returns></returns>
         public LayoutModel<TLayoutType> ReadLayout<TLayoutType>(long position = 0)
             where TLayoutType : struct
@@ -136,7 +131,7 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Read a layout model
         /// </summary>
-        /// <typeparam name="T">Layout Model Type</typeparam>
+        /// <typeparam name="TLayoutType">Layout Model Type</typeparam>
         /// <param name="position">The position in the file at which to begin reading
         /// relative to the current position in the file. Default is 0</param>
         /// <param name="model"></param>

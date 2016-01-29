@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     /// <summary>
     /// Object files contain COFF relocations, which specify how the section data should be 

@@ -33,6 +33,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Native.IO, Version=2.1.0.0, Culture=neutral, PublicKeyToken=4d31a58f7d7ad5c9, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Native.IO.2.1.0.1\lib\net40\System.Native.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,13 +46,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converter\DateTimeConverter.cs" />
+    <Compile Include="Factory\FactoryCOFFDataStore.cs" />
+    <Compile Include="Factory\FactoryCOFFReaderProperty.cs" />
+    <Compile Include="Factory\FactoryFileReadStrategy.cs" />
     <Compile Include="Interface\ICOFFBrowser.cs" />
-    <Compile Include="Interface\ICOFFNavigator.cs" />
+    <Compile Include="Interface\ICOFFDataStore.cs" />
+    <Compile Include="Interface\ICOFFReaderProperty.cs" />
     <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\COFFFileHeaderLayoutModel.cs" />
+    <Compile Include="Model\Class\COFFSymbolTableLayoutModel.cs" />
     <Compile Include="Model\Class\LayoutModel.cs" />
     <Compile Include="Model\Class\MSDOSStubLayoutModel.cs" />
-    <Compile Include="Model\Enum\EnumReaderType.cs" />
+    <Compile Include="Model\Enum\EnumCOFFReaderType.cs" />
     <Compile Include="Model\Struct\AttributeCertificateTableImageOnlyFormat.cs" />
     <Compile Include="Model\Struct\AuxiliarybfAndefSymbolLayout.cs" />
     <Compile Include="Model\Struct\AuxiliaryCLRTokenLayout.cs" />
@@ -103,17 +113,22 @@
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon1.cs" />
     <Compile Include="Model\Struct\OptionalHeaderWindowsSpecificFieldsCommon2.cs" />
     <Compile Include="Process\BitConverterExtended.cs" />
-    <Compile Include="Process\COFFNavigator.cs" />
+    <Compile Include="Process\COFFDataStore.cs" />
+    <Compile Include="Process\COFFReaderHelperInternal.cs" />
     <Compile Include="Process\COFFReaderProperty.cs" />
     <Compile Include="Process\MemoryRandomAccess.cs" />
     <Compile Include="Process\MemorySequentialAccess.cs" />
     <Compile Include="Process\ObjectFileReader.cs" />
     <Compile Include="Process\COFFBrowserBase.cs" />
     <Compile Include="Process\ReadFileSectionCondition.cs" />
+    <Compile Include="Process\TempFileBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attribute\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

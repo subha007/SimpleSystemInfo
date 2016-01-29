@@ -1,11 +1,6 @@
 ﻿using log4net;
 using SysInfoInventryWinReg.Generic;
 using SysInfoInventryWinReg.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SysInfoInventryWinReg.Process
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.WSIException
+﻿namespace WinSysInfo.WSIException
 {
     /// <summary>
     /// This enumerator class describes the exception level of logging

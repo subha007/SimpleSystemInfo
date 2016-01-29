@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Model
+﻿namespace WinSysInfo.PEView.Model
 {
     /// <summary>
     /// This auxiliary symbol generally follows the IMAGE_SYM_CLASS_CLR_TOKEN. It is used to

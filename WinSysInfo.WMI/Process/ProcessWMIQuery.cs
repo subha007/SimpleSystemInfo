@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using SysInfoWMI.Model;
 
 namespace SysInfoWMI.Process
@@ -37,9 +33,11 @@ namespace SysInfoWMI.Process
                 this.MgmntScope = new ManagementScope(mgmntPath);
             else
             {
-                ConnectionOptions connOptions = new ConnectionOptions();
-                connOptions.Username = userName;
-                connOptions.Password = Password;
+                ConnectionOptions connOptions = new ConnectionOptions
+                {
+                    Username = userName,
+                    Password = Password
+                };
                 this.MgmntScope = new ManagementScope(mgmntPath, connOptions);
             }
         }

@@ -3,9 +3,7 @@ using SysInfoInventryWinReg.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -127,10 +125,12 @@ namespace SysInfoInventryWinReg.Process
         /// <returns></returns>
         private XmlWriter GetXmlWriterInstance()
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = false;
-            settings.Indent = true;
-            settings.IndentChars = " ";
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = false,
+                Indent = true,
+                IndentChars = " "
+            };
 
             return XmlWriter.Create(this.Configurator.ConfigPath, settings);
         }

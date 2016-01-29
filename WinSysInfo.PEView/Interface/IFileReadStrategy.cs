@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinSysInfo.PEView.Model;
+﻿using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Interface
 {
@@ -12,14 +7,17 @@ namespace WinSysInfo.PEView.Interface
     /// </summary>
     public interface IFileReadStrategy
     {
+        /// <summary>
+        /// Reference to the Reader property passed from the file parser object
+        /// </summary>
+        ICOFFReaderProperty ReaderProperty { get; set; }
+
         #region OpenClose
 
         /// <summary>
         /// Open a partial section of the file for read from the offset and size
         /// </summary>
-        /// <param name="offset">The offset in the file from which to create file reader</param>
-        /// <param name="size">The size of file from offset to create a reader</param>
-        void Open(long offset, long size);
+        void Open();
 
         /// <summary>
         /// Close file
@@ -47,16 +45,49 @@ namespace WinSysInfo.PEView.Interface
         /// relative to the current position in the file. Default is 0</param>
         /// <param name="count">The number of bytes to read.</param>
         /// <returns>A byte array</returns>
-        byte[] PeekBytes(int count, long position);
+        byte[] PeekBytes(int count, long position = 0);
+
+        /// <summary>
+        /// Peek ahead bytes but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        /// <param name="count">The number of bytes to read. Default 1.</param>
+        /// <returns>A byte array</returns>
+        LayoutModel<TLayoutType> PeekStructure<TLayoutType>(int count = 1, long position = 0)
+            where TLayoutType : struct;
+
+        /// <summary>
+        /// Peek ahead ushort but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        ushort PeekUShort(long position = 0);
 
         #endregion
+
+        #region Seek
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        void SeekForward(long position);
+
+        /// <summary>
+        /// Seek file pointer to position
+        /// </summary>
+        /// <param name="position"></param>
+        void SeekOriginal(long position);
+
+        #endregion Seek
 
         #region Reader With Position
 
         /// <summary>
         /// Read a layout model
         /// </summary>
-        /// <typeparam name="T">The Layout Model value Type</typeparam>
+        /// <typeparam name="TLayoutType">The Layout Model value Type</typeparam>
         /// <param name="position">The position in the file at which to begin reading
         /// relative to the current position in the file. Default is 0</param>
         /// <returns>The structure to contain the read data</returns>

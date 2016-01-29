@@ -1,11 +1,7 @@
 ﻿using Microsoft.Win32;
 using WinSysInfo.WSIException;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace SysInfoInventryWinReg.Model
@@ -89,10 +85,10 @@ namespace SysInfoInventryWinReg.Model
         /// <param name="message"></param>
         public void AddLog(ExceptionLevel level, string message)
         {
-            if (this.ExceptionData == null)
-                this.ExceptionData = ExceptionFactory.GetNewInstance();
+            //if (this.ExceptionData == null)
+            //    this.ExceptionData = ExFactoryGeneric.GetNewInstance();
 
-            this.ExceptionData.AddLog(level, message);
+            //this.ExceptionData.AddLog(level, message);
         }
     }
 }

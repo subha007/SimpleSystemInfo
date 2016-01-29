@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WinSysInfo.PEView.Interface
+﻿namespace WinSysInfo.PEView.Interface
 {
     /// <summary>
     /// A generic interface to browse through the PE / COFF file
     /// </summary>
     public interface ICOFFBrowser
     {
+        #region Properties
+
         /// <summary>
         /// Get or set the reader strategy
         /// </summary>
-        IFileReadStrategy ReaderStrategy { get; set; }
+        IFileReadStrategy ReaderStrategy { get; }
 
         /// <summary>
         /// Data mapping
         /// </summary>
-        ICOFFNavigator Navigator { get; set; }
+        ICOFFDataStore DataStore { get; set; }
+
+        /// <summary>
+        /// Reader property
+        /// </summary>
+        ICOFFReaderProperty ReaderProperty { get; set; }
+
+        #endregion
     }
 }

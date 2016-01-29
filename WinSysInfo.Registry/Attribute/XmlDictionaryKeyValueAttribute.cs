@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SysInfoInventryWinReg.Attribute
+﻿namespace SysInfoInventryWinReg.Attribute
 {
     /// <summary>
     /// The class used for Xml Serialization of Dictionary object
