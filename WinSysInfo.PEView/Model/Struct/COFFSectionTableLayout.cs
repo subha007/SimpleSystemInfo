@@ -86,6 +86,6 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// The flags that describe the characteristics of the section
         /// </summary>
-        public uint Characteristics { get; set; }
+        public EnumCOFFSectionHeaderCharacteristics Characteristics { get; set; }
     }
 }

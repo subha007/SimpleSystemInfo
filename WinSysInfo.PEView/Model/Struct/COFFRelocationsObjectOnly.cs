@@ -8,7 +8,7 @@
     /// of base relocations in the .reloc section (unless the image has the 
     /// IMAGE_FILE_RELOCS_STRIPPED attribute).
     /// </summary>
-    public class COFFRelocationsObjectOnly
+    public struct COFFRelocationsObjectOnly
     {
         /// <summary>
         /// The address of the item to which relocation is applied. This is the offset from the 

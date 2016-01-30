@@ -22,6 +22,10 @@ namespace WinSysInfo.PEView.Model
 
         public LayoutModel() { }
 
+        /// <summary>
+        /// Shallow copy
+        /// </summary>
+        /// <param name="obj"></param>
         public LayoutModel(LayoutModel<TLayoutType> obj)
         {
             this.LayoutType = obj.LayoutType;

@@ -18,7 +18,7 @@
         public static readonly char[] PEMagic = { 'P', 'E', '\0', '\0' };
 
         /// <summary>
-        /// The COFF MS DOS signature bytes
+        /// The COFF MS DOS signature bytes. Hex Value is 0x5a4d
         /// </summary>
         public static readonly char[] MSDOSMagic = { 'M', 'Z' };
 

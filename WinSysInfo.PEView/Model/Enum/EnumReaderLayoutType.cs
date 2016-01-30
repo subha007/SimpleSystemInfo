@@ -6,7 +6,6 @@ namespace WinSysInfo.PEView.Model
     /// The flags representing individual structures
     /// The enums are to be in sequential order of file read
     /// </summary>
-    [Flags]
     public enum EnumReaderLayoutType : ulong
     {
         NONE = 0x00000000,
@@ -38,6 +37,11 @@ namespace WinSysInfo.PEView.Model
         COFF_SECTION_TABLE = OPT_HEADER_DATADIR_RESERVED + 1,
         COFF_SYM_TABLE = COFF_SECTION_TABLE + 1,
         COFF_SYM_TABLE_BIGOBJ = COFF_SYM_TABLE + 1,
+        IMPORT_DIR_TABLE_ENTRY = COFF_SYM_TABLE_BIGOBJ + 1,
+        DELAY_IMPORT_DIR_TABLE_ENTRY = IMPORT_DIR_TABLE_ENTRY + 1,
+        EXPORT_DIR_TABLE_ENTRY = DELAY_IMPORT_DIR_TABLE_ENTRY + 1,
+        BASE_RELOC_HEADER = EXPORT_DIR_TABLE_ENTRY + 1,
+        BASE_RELOC_END = BASE_RELOC_HEADER + 1,
         FULL_READ = 0xFFFFFFFF,
     }
 }

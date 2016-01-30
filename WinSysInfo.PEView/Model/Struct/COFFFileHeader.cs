@@ -48,7 +48,7 @@ namespace WinSysInfo.PEView.Model
         /// The size of the optional header, which is required for executable files 
         /// but not for object files. This value should be zero for an object file.
         /// </summary>
-        public uint SizeOfOptionalHeader { get; set; }
+        public ushort SizeOfOptionalHeader { get; set; }
 
         /// <summary>
         /// The flags that indicate the attributes of the file

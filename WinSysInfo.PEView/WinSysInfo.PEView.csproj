@@ -51,12 +51,15 @@
     <Compile Include="Factory\FactoryFileReadStrategy.cs" />
     <Compile Include="Interface\ICOFFBrowser.cs" />
     <Compile Include="Interface\ICOFFDataStore.cs" />
+    <Compile Include="Interface\ICOFFFileLayout.cs" />
     <Compile Include="Interface\ICOFFReaderProperty.cs" />
     <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\COFFFileHeaderLayoutModel.cs" />
     <Compile Include="Model\Class\COFFSymbolTableLayoutModel.cs" />
     <Compile Include="Model\Class\LayoutModel.cs" />
     <Compile Include="Model\Class\MSDOSStubLayoutModel.cs" />
+    <Compile Include="Model\Class\PEFileLayout.cs" />
+    <Compile Include="Model\Enum\EnumCOFFFileType.cs" />
     <Compile Include="Model\Enum\EnumCOFFReaderType.cs" />
     <Compile Include="Model\Struct\AttributeCertificateTableImageOnlyFormat.cs" />
     <Compile Include="Model\Struct\AuxiliarybfAndefSymbolLayout.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="Model\Struct\AuxiliaryFunctionDefinitionLayout.cs" />
     <Compile Include="Model\Struct\AuxiliarySectionDefinitionsLayout.cs" />
     <Compile Include="Model\Struct\AuxiliaryWeakExternalLayout.cs" />
+    <Compile Include="Model\Struct\COFFBaseRelocBlockHeader.cs" />
     <Compile Include="Model\Struct\COFFBigObjHeader.cs" />
     <Compile Include="Model\Struct\COFFFileHeader.cs" />
     <Compile Include="Model\Struct\COFFOptionalHeader.cs" />
@@ -99,6 +103,8 @@
     <Compile Include="Model\Enum\EnumWeakExternalCharacteristics.cs" />
     <Compile Include="Model\Enum\EnumWindowsSubsytem.cs" />
     <Compile Include="Model\Enum\EnumCOFFDllCharacteristics.cs" />
+    <Compile Include="Model\Struct\DelayImportDirectoryTableEntry.cs" />
+    <Compile Include="Model\Struct\ExportDirectoryTableEntry.cs" />
     <Compile Include="Model\Struct\ImportDirectoryTableEntry.cs" />
     <Compile Include="Model\Struct\ImportHeaderLayout.cs" />
     <Compile Include="Model\Struct\ImportLookupTableEntry32.cs" />
@@ -120,6 +126,7 @@
     <Compile Include="Process\MemorySequentialAccess.cs" />
     <Compile Include="Process\ObjectFileReader.cs" />
     <Compile Include="Process\COFFBrowserBase.cs" />
+    <Compile Include="Process\PEFileLayoutBrowse.cs" />
     <Compile Include="Process\ReadFileSectionCondition.cs" />
     <Compile Include="Process\TempFileBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

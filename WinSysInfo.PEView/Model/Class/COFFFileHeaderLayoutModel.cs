@@ -1,10 +1,14 @@
-﻿namespace WinSysInfo.PEView.Model
+﻿using System;
+namespace WinSysInfo.PEView.Model
 {
     public class COFFFileHeaderLayoutModel : LayoutModel<COFFFileHeader>
     {
+        public DateTime TimeDateStamp { get; set; }
+
         public COFFFileHeaderLayoutModel(LayoutModel<COFFFileHeader> baseObj)
             :base(baseObj)
         {
+            this.TimeDateStamp = new System.DateTime(1970, 1, 1).AddSeconds(base.Data.TimeDateStamp);
         }
 
         public bool IsImportLibrary()

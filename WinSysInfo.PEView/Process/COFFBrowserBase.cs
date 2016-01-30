@@ -36,6 +36,10 @@ namespace WinSysInfo.PEView.Process
             }
         }
 
+        public EnumCOFFFileType TypeOfCOFF { get; set; }
+
+        public ICOFFFileLayout FileLayout { get; set; }
+
         /// <summary>
         /// Construct the base PE browser
         /// </summary>
@@ -149,7 +153,17 @@ namespace WinSysInfo.PEView.Process
             }
 
             // Initialize the pointer to the beginning of the import table.
+            if (coffReaderHelper.InitImportTablePointer() == false)
+                throw new Exception();
 
+            if (coffReaderHelper.InitDelayImportTablePointer() == false)
+                throw new Exception();
+
+            if (coffReaderHelper.InitExportTablePointer() == false)
+                throw new Exception();
+
+            if (coffReaderHelper.InitBaseRelocPointer() == false)
+                throw new Exception();
 
             // Find string table. The first four byte of the string table contains the
             // total size of the string table, including the size field itself. If the

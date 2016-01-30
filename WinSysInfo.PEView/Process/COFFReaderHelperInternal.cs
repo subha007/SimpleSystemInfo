@@ -44,6 +44,17 @@ namespace WinSysInfo.PEView.Process
         internal LayoutModel<OptionalHeaderStandardFields> OptHStdFields { get; set; }
         internal LayoutModel<OptionalHeaderWindowsSpecificFields32> OptHWinSpFields32 { get; set; }
         internal LayoutModel<OptionalHeaderWindowsSpecificFields32Plus> OptHWinSpFields32Plus { get; set; }
+        internal LayoutModel<OptionalHeaderDataDirImageOnly> OptHDataDirImage { get; set; }
+        internal uint NumberOfImportDirectory;
+        internal uint NumberOfDelayImportDirectory;
+
+        internal EnumCOFFFileType FindCOFFFileType()
+        {
+            if (PEFileLayoutBrowse.HasPEHeader(ReaderStrategy))
+                return EnumCOFFFileType.PE;
+
+            return EnumCOFFFileType.NONE;
+        }
 
         /// <summary>
         /// Check if the file is PE / COFF
@@ -68,6 +79,11 @@ namespace WinSysInfo.PEView.Process
             // PE/COFF, seek through MS-DOS compatibility stub and 4-byte
             // PE signature to find 'normal' COFF header.
             this.DosHeaderObj = this.ReaderStrategy.ReadLayout<MSDOSHeaderLayout>();
+
+            //Check if PE header is DWORD-aligned
+            if ((this.DosHeaderObj.Data.AddressOfNewExeHeader % sizeof(uint)) != 0)
+                throw new System.DataMisalignedException("PE header is not DWORD-aligned");
+
             this.DataStore.SetData(EnumReaderLayoutType.MSDOS_HEADER,
                               this.DosHeaderObj);
         }
@@ -90,6 +106,11 @@ namespace WinSysInfo.PEView.Process
         /// <returns></returns>
         internal bool ContainsPEMagicBytes()
         {
+            // Check that the address matches
+            if (this.DosHeaderObj.Data.AddressOfNewExeHeader !=
+                this.ReaderStrategy.FileOffset)
+                throw new System.IndexOutOfRangeException();
+
             // Check the PE magic bytes. ("PE\0\0")
             // Check if this is a PE/COFF file.
             char[] sigchars = System.Text.Encoding.UTF8.GetString(
@@ -116,7 +137,7 @@ namespace WinSysInfo.PEView.Process
             // PE/COFF, seek through MS-DOS compatibility stub and 4-byte
             // PE signature to find 'normal' COFF header.
             this.CoffHeaderObj =
-                                (COFFFileHeaderLayoutModel) this.ReaderStrategy.ReadLayout<COFFFileHeader>();
+                                new COFFFileHeaderLayoutModel(this.ReaderStrategy.ReadLayout<COFFFileHeader>());
             this.DataStore.SetData(EnumReaderLayoutType.COFF_FILE_HEADER,
                               this.CoffHeaderObj);
         }
@@ -290,16 +311,130 @@ namespace WinSysInfo.PEView.Process
             }
         }
 
-        internal void GetDataDirectory(EnumReaderLayoutType dataDirType)
+        internal LayoutModel<OptionalHeaderDataDirImageOnly> GetDataDirectory(EnumReaderLayoutType dataDirType)
         {
-            LayoutModel<OptionalHeaderDataDirImageOnly> dataDirPointer =
-                this.DataStore.GetData<LayoutModel<OptionalHeaderDataDirImageOnly>>(dataDirType);
-            //this.ReaderStrategy.()
+            if (!(dataDirType >= EnumReaderLayoutType.OPT_HEADER_DATADIR_EXPORT_TABLE &&
+                dataDirType <= EnumReaderLayoutType.OPT_HEADER_DATADIR_RESERVED))
+                throw new System.ArgumentOutOfRangeException("dataDirType");
+            
+            return this.DataStore.GetData<LayoutModel<OptionalHeaderDataDirImageOnly>>(dataDirType);
         }
 
-        internal void InitImportTablePointer()
+        internal List<LayoutModel<COFFSectionTableLayout>> GetSections()
         {
+            return this.DataStore.GetData<List<LayoutModel<COFFSectionTableLayout>>>(
+                                                EnumReaderLayoutType.COFF_SECTION_TABLE);
+        }
 
+        internal long GetRVAPosition(uint dataRelVirtualAddress)
+        {
+            List<LayoutModel<COFFSectionTableLayout>> listSections = GetSections();
+
+            foreach (LayoutModel<COFFSectionTableLayout> section in listSections)
+            {
+                uint sectionEnd = section.Data.VirtualAddress + section.Data.VirtualSize;
+                if (section.Data.VirtualAddress <= dataRelVirtualAddress &&
+                    dataRelVirtualAddress < sectionEnd)
+                {
+                    uint offset = dataRelVirtualAddress - section.Data.VirtualAddress;
+                    uint position = section.Data.PointerToRawData + offset;
+                    return position;
+                }
+            }
+
+            return -1;
+        }
+
+        internal bool InitImportTablePointer()
+        {
+            // First, we get the RVA of the import table. If the file lacks a pointer to
+            // the import table, do nothing.
+            this.OptHDataDirImage =
+                GetDataDirectory(EnumReaderLayoutType.OPT_HEADER_DATADIR_IMPORT_TABLE);
+
+            // Do nothing if the pointer to import table is NULL.
+            if (this.OptHDataDirImage == null) return false;
+            if (this.OptHDataDirImage.Data.RelativeVirtualAddress == 0) return false;
+
+            // -1 because the last entry is the null entry.
+            this.NumberOfImportDirectory = (this.OptHDataDirImage.Data.Size / LayoutModel<ImportDirectoryTableEntry>.DataSize) - 1;
+
+            // Find the section that contains the RVA. This is needed because the RVA is
+            // the import table's memory address which is different from its file offset.
+            long positionPtr = GetRVAPosition(this.OptHDataDirImage.Data.RelativeVirtualAddress);
+
+            if (positionPtr < 0) return false;
+            this.ReaderStrategy.SeekForward(positionPtr);
+
+            this.DataStore.SetData(EnumReaderLayoutType.IMPORT_DIR_TABLE_ENTRY,
+                this.ReaderStrategy.ReadLayout<ImportDirectoryTableEntry>());
+
+            return true;
+        }
+
+        internal bool InitDelayImportTablePointer()
+        {
+            LayoutModel<OptionalHeaderDataDirImageOnly> optHDataDirImage =
+                GetDataDirectory(EnumReaderLayoutType.OPT_HEADER_DATADIR_DELAY_IMPORT_DESCRIPTOR);
+
+            if (optHDataDirImage == null) return false;
+            if (optHDataDirImage.Data.RelativeVirtualAddress == 0) return false;
+
+            this.NumberOfDelayImportDirectory =
+                (optHDataDirImage.Data.Size / LayoutModel<ImportDirectoryTableEntry>.DataSize) - 1;
+
+            long positionPtr = GetRVAPosition(optHDataDirImage.Data.RelativeVirtualAddress);
+
+            if (positionPtr < 0) return false;
+            this.ReaderStrategy.SeekForward(positionPtr);
+
+            this.DataStore.SetData(EnumReaderLayoutType.DELAY_IMPORT_DIR_TABLE_ENTRY,
+                this.ReaderStrategy.ReadLayout<DelayImportDirectoryTableEntry>());
+
+            return true;
+        }
+
+        internal bool InitExportTablePointer()
+        {
+            LayoutModel<OptionalHeaderDataDirImageOnly> optHDataDirImage =
+                GetDataDirectory(EnumReaderLayoutType.OPT_HEADER_DATADIR_EXPORT_TABLE);
+
+            if (optHDataDirImage == null) return false;
+            if (optHDataDirImage.Data.RelativeVirtualAddress == 0) return false;
+
+            long positionPtr = GetRVAPosition(optHDataDirImage.Data.RelativeVirtualAddress);
+
+            if (positionPtr < 0) return false;
+            this.ReaderStrategy.SeekForward(positionPtr);
+
+            this.DataStore.SetData(EnumReaderLayoutType.EXPORT_DIR_TABLE_ENTRY,
+                this.ReaderStrategy.ReadLayout<ExportDirectoryTableEntry>());
+
+            return true;
+        }
+
+        internal bool InitBaseRelocPointer()
+        {
+            LayoutModel<OptionalHeaderDataDirImageOnly> optHDataDirImage =
+                GetDataDirectory(EnumReaderLayoutType.OPT_HEADER_DATADIR_BASE_RELOCATION_TABLE);
+
+            if (optHDataDirImage == null) return false;
+            if (optHDataDirImage.Data.RelativeVirtualAddress == 0) return false;
+
+            long positionPtr = GetRVAPosition(optHDataDirImage.Data.RelativeVirtualAddress);
+
+            if (positionPtr < 0) return false;
+            this.ReaderStrategy.SeekForward(positionPtr);
+
+            this.DataStore.SetData(EnumReaderLayoutType.BASE_RELOC_HEADER,
+                this.ReaderStrategy.ReadLayout<COFFBaseRelocBlockHeader>());
+
+            this.ReaderStrategy.SeekForward(optHDataDirImage.Data.Size);
+
+            this.DataStore.SetData(EnumReaderLayoutType.BASE_RELOC_END,
+                this.ReaderStrategy.ReadLayout<COFFBaseRelocBlockHeader>());
+
+            return true;
         }
     }
 }

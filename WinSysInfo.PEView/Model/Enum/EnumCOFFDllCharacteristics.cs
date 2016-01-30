@@ -7,7 +7,7 @@ namespace WinSysInfo.PEView.Model
     /// optional header
     /// </summary>
     [Flags]
-    public enum EnumCOFFDllCharacteristics
+    public enum EnumCOFFDllCharacteristics : ushort
     {
         /// <summary>
         /// ASLR with 64 bit address space.

@@ -87,6 +87,6 @@ namespace WinSysInfo.PEView.Model
         /// <summary>
         /// Dll characteristics
         /// </summary>
-        public ushort DllCharacteristics { get; set; }
+        public EnumCOFFDllCharacteristics DllCharacteristics { get; set; }
     }
 }
