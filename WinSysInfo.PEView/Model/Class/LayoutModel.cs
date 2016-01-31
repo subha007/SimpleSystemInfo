@@ -53,7 +53,7 @@ namespace WinSysInfo.PEView.Model
         }
 
         /// <summary>
-        /// Get the offset
+        /// Get the offset of a field in  structure
         /// </summary>
         /// <param name="fieldName"></param>
         /// <returns></returns>

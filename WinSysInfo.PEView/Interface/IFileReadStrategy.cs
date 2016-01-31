@@ -64,6 +64,13 @@ namespace WinSysInfo.PEView.Interface
         /// relative to the current position in the file. Default is 0</param>
         ushort PeekUShort(long position = 0);
 
+        /// <summary>
+        /// Peek ahead uint but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        uint PeekUInt(long position = 0);
+
         #endregion
 
         #region Seek

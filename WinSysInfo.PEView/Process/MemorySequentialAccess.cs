@@ -159,6 +159,17 @@ namespace WinSysInfo.PEView.Process
             return BitConverter.ToUInt16(bData, 0);
         }
 
+        /// <summary>
+        /// Peek ahead uint but do not chnage the seek pointer in sequential access
+        /// </summary>
+        /// <param name="position">The position in the file at which to begin reading
+        /// relative to the current position in the file. Default is 0</param>
+        uint PeekUInt(long position = 0)
+        {
+            byte[] bData = PeekBytes(4, position);
+            return BitConverter.ToUInt32(bData, 0);
+        }
+
         #endregion
 
         #region Seek

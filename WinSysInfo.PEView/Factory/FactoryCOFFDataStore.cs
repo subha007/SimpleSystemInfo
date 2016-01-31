@@ -1,4 +1,5 @@
 ﻿using WinSysInfo.PEView.Interface;
+using WinSysInfo.PEView.Model;
 using WinSysInfo.PEView.Process;
 
 namespace WinSysInfo.PEView.Factory
@@ -8,6 +9,11 @@ namespace WinSysInfo.PEView.Factory
         public static ICOFFDataStore Default()
         {
             return new COFFDataStore();
+        }
+
+        public static ICOFFDataStore PEStore()
+        {
+            return new PEFileLayout();
         }
     }
 }

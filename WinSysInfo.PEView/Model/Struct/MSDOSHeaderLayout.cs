@@ -18,7 +18,10 @@ namespace WinSysInfo.PEView.Model
     public struct MSDOSHeaderLayout
     {
         /// <summary>
-        /// Generally ID='MZ'. This is the DOS executable signature. 
+        /// The first field, e_magic, is the so-called magic number.
+        /// This is the DOS executable signature. This field is used to identify an 
+        /// MS-DOS-compatible file type. All MS-DOS-compatible executable files 
+        /// set this value to 0x54AD, which represents the ASCII characters MZ.
         /// It stands for Mark Zbikowski
         /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
