@@ -26,7 +26,7 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reference to the Reader property passed from the file parser object
         /// </summary>
-        public ICOFFReaderProperty ReaderProperty { get; set; }
+        public IFileReaderProperty ReaderProperty { get; set; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace WinSysInfo.PEView.Process
         /// Basic constructor
         /// </summary>
         /// <param name="readerProperty"></param>
-        public MemoryRandomAccess(ICOFFReaderProperty readerProperty)
+        public MemoryRandomAccess(IFileReaderProperty readerProperty)
         {
             if (readerProperty == null) throw new ArgumentNullException("readerProperty");
             if (readerProperty.TryValidate() == false) throw new InvalidOperationException("readerProperty has invalid data");

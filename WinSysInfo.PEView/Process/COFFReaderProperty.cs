@@ -4,7 +4,7 @@ using WinSysInfo.PEView.Model;
 
 namespace WinSysInfo.PEView.Process
 {
-    public class COFFReaderProperty : ICOFFReaderProperty
+    public class COFFReaderProperty : IFileReaderProperty
     {
         /// <summary>
         /// Specifies the data structures to read

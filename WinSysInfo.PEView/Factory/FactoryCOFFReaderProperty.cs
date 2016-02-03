@@ -6,12 +6,12 @@ namespace WinSysInfo.PEView.Factory
 {
     public static class FactoryCOFFReaderProperty
     {
-        public static ICOFFReaderProperty Default()
+        public static IFileReaderProperty Default()
         {
             return new COFFReaderProperty();
         }
 
-        public static ICOFFReaderProperty New(string fullFilePath
+        public static IFileReaderProperty New(string fullFilePath
                                             , EnumCOFFReaderType readerType
                                             , long offset
                                             , long size)

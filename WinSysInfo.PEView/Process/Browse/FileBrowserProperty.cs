@@ -35,8 +35,8 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reader property
         /// </summary>
-        private ICOFFReaderProperty readerProperty;
-        public ICOFFReaderProperty ReaderProperty
+        private IFileReaderProperty readerProperty;
+        public IFileReaderProperty ReaderProperty
         {
             get { return readerProperty; }
             set

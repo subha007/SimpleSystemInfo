@@ -50,11 +50,15 @@
     <Compile Include="Factory\FactoryCOFFFileBrowse.cs" />
     <Compile Include="Factory\FactoryCOFFReaderProperty.cs" />
     <Compile Include="Factory\FactoryFileReadStrategy.cs" />
+    <Compile Include="Helper\StringExHelper.cs" />
     <Compile Include="Interface\ICOFFBrowser.cs" />
     <Compile Include="Interface\ICOFFDataStore.cs" />
     <Compile Include="Interface\ICOFFFileLayout.cs" />
     <Compile Include="Interface\ICOFFFileLayoutBrowse.cs" />
-    <Compile Include="Interface\ICOFFReaderProperty.cs" />
+    <Compile Include="Interface\IFileReader.cs" />
+    <Compile Include="Interface\IFileReaderProperty.cs" />
+    <Compile Include="Interface\IFileBrowse.cs" />
+    <Compile Include="Interface\IFileBrowseProperty.cs" />
     <Compile Include="Interface\IFileReadStrategy.cs" />
     <Compile Include="Model\Class\COFFFileHeaderLayoutModel.cs" />
     <Compile Include="Model\Class\COFFSectionTableList.cs" />
@@ -67,6 +71,7 @@
     <Compile Include="Model\Class\SymbolTableList.cs" />
     <Compile Include="Model\Enum\EnumCOFFFileType.cs" />
     <Compile Include="Model\Enum\EnumCOFFReaderType.cs" />
+    <Compile Include="Model\Enum\EnumFileDataType.cs" />
     <Compile Include="Model\Enum\EnumFileType.cs" />
     <Compile Include="Model\Struct\AttributeCertificateTableImageOnlyFormat.cs" />
     <Compile Include="Model\Struct\AuxiliarybfAndefSymbolLayout.cs" />
@@ -131,6 +136,7 @@
     <Compile Include="Process\COFFDataStore.cs" />
     <Compile Include="Process\COFFReaderHelperInternal.cs" />
     <Compile Include="Process\COFFReaderProperty.cs" />
+    <Compile Include="Process\FileDataTypeProperty.cs" />
     <Compile Include="Process\MemoryRandomAccess.cs" />
     <Compile Include="Process\MemorySequentialAccess.cs" />
     <Compile Include="Process\ObjectFileReader.cs" />

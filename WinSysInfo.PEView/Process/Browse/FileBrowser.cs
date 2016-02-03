@@ -13,7 +13,7 @@ namespace WinSysInfo.PEView.Process
     /// <summary>
     /// The root class used to browse a file in the file browser tree
     /// </summary>
-    public class FileBrowser
+    public class FileBrowser : 
     {
         /// <summary>
         /// All the browser properties for browsing

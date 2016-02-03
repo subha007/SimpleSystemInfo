@@ -7,7 +7,7 @@ namespace WinSysInfo.PEView.Factory
 {
     public static class FactoryFileReadStrategy
     {
-        public static IFileReadStrategy Instance(ICOFFReaderProperty readerProperty)
+        public static IFileReadStrategy Instance(IFileReaderProperty readerProperty)
         {
             IFileReadStrategy readStrategy = null;
             switch(readerProperty.ReaderType)

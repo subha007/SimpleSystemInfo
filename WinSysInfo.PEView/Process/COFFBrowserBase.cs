@@ -25,8 +25,8 @@ namespace WinSysInfo.PEView.Process
         /// <summary>
         /// Reader property
         /// </summary>
-        private ICOFFReaderProperty readerProperty;
-        public ICOFFReaderProperty ReaderProperty 
+        private IFileReaderProperty readerProperty;
+        public IFileReaderProperty ReaderProperty 
         {
             get { return readerProperty; }
             set
@@ -51,7 +51,7 @@ namespace WinSysInfo.PEView.Process
         /// Construct the base PE browser
         /// </summary>
         /// <param name="reader"></param>
-        public COFFBrowserBase(ICOFFReaderProperty reader)
+        public COFFBrowserBase(IFileReaderProperty reader)
             : this(reader, null)
         {
         }
@@ -61,7 +61,7 @@ namespace WinSysInfo.PEView.Process
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="store"></param>
-        public COFFBrowserBase(ICOFFReaderProperty reader, ICOFFDataStore store)
+        public COFFBrowserBase(IFileReaderProperty reader, ICOFFDataStore store)
         {
             this.ReaderProperty = reader;
             this.DataStore = store;

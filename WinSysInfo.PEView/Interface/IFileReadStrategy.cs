@@ -10,7 +10,7 @@ namespace WinSysInfo.PEView.Interface
         /// <summary>
         /// Reference to the Reader property passed from the file parser object
         /// </summary>
-        ICOFFReaderProperty ReaderProperty { get; set; }
+        IFileReaderProperty ReaderProperty { get; set; }
 
         #region OpenClose
 

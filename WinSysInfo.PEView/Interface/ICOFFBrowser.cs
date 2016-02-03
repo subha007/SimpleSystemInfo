@@ -20,7 +20,7 @@
         /// <summary>
         /// Reader property
         /// </summary>
-        ICOFFReaderProperty ReaderProperty { get; set; }
+        IFileReaderProperty ReaderProperty { get; set; }
 
         #endregion
     }
